@@ -1,19 +1,20 @@
+
 /*
- HIREMIND AI - AI ENGINE
- Phase 3 - Step 1
- Secure-ready frontend utility layer
+ HIREMIND AI
+ Professional HR AI Engine
+ Version 1.0
 */
 
-// Resume text analysis
+// 1. Resume Analyzer
 function analyzeResume(resumeText, requiredSkills) {
   if (!resumeText || !requiredSkills) {
     return {
       success: false,
-      message: "Resume text and job skills are required."
+      message: "Resume and required skills are required."
     };
   }
 
-  const text = resumeText.toLowerCase();
+  const resume = resumeText.toLowerCase();
 
   const skills = requiredSkills
     .split(",")
@@ -21,86 +22,168 @@ function analyzeResume(resumeText, requiredSkills) {
     .filter(Boolean);
 
   const matched = skills.filter(skill =>
-    text.includes(skill)
+    resume.includes(skill)
   );
 
   const missing = skills.filter(skill =>
-    !text.includes(skill)
+    !resume.includes(skill)
   );
 
-  const coverage = skills.length
+  const score = skills.length
     ? Math.round((matched.length / skills.length) * 100)
     : 0;
 
   return {
     success: true,
-    coverage,
-    matched,
-    missing,
-    reviewRequired: true,
-    note: "Keyword coverage is not a measure of candidate quality. Human review is required."
+    score,
+    matchedSkills: matched,
+    missingSkills: missing,
+    totalSkills: skills.length,
+    recommendation:
+      score >= 75 ? "Strong Skills Match" :
+      score >= 40 ? "Moderate Skills Match" :
+      "Low Skills Match"
   };
 }
 
-// Candidate skill comparison
-function matchCandidate(candidateSkills, requiredSkills) {
-  const candidate = candidateSkills
-    .split(",")
-    .map(x => x.trim().toLowerCase())
-    .filter(Boolean);
 
-  const required = requiredSkills
-    .split(",")
-    .map(x => x.trim().toLowerCase())
-    .filter(Boolean);
-
-  const matched = required.filter(x => candidate.includes(x));
-  const missing = required.filter(x => !candidate.includes(x));
+// 2. Job Description Generator
+function generateJobDescription(role, skills, experience) {
+  if (!role || !skills || !experience) {
+    return {
+      success: false,
+      message: "All job details are required."
+    };
+  }
 
   return {
-    coverage: required.length
-      ? Math.round((matched.length / required.length) * 100)
-      : 0,
-    matched,
-    missing
+    success: true,
+    title: role,
+    description: `
+Job Title: ${role}
+
+Experience: ${experience}
+
+Required Skills:
+${skills}
+
+Responsibilities:
+- Perform responsibilities related to ${role}.
+- Collaborate with team members.
+- Deliver quality work.
+- Meet project objectives.
+
+Qualifications:
+- Relevant professional knowledge.
+- Practical experience.
+- Strong communication skills.
+- Problem-solving abilities.
+`
   };
 }
 
-// Job description template
-function createJobDescription(title, skills, experience) {
+
+// 3. Candidate Matching
+function matchCandidate(resumeText, jobSkills) {
+  const result = analyzeResume(resumeText, jobSkills);
+
+  if (!result.success) {
+    return result;
+  }
+
   return {
-    title,
-    experience,
-    skills: skills.split(",").map(x => x.trim()),
-    summary: `We are looking for a ${title} to join our team.`,
-    responsibilities: [
-      "Complete role-related responsibilities.",
-      "Collaborate with team members.",
-      "Contribute to team goals."
-    ],
-    reviewRequired: true
+    success: true,
+    matchScore: result.score,
+    matchedSkills: result.matchedSkills,
+    missingSkills: result.missingSkills,
+    message: result.recommendation
   };
 }
 
-// Interview question generator
-function createInterviewQuestions(role) {
-  return [
-    `What interests you about the ${role} position?`,
-    "Describe a relevant project you have completed.",
-    "How do you solve unfamiliar problems?",
-    "How do you manage competing priorities?",
-    "Describe a successful team collaboration.",
-    "What skills would you like to develop?",
-    "How do you respond to feedback?",
-    "What questions do you have about this role?"
+
+// 4. Interview Question Generator
+function generateInterviewQuestions(role, level) {
+  if (!role || !level) {
+    return {
+      success: false,
+      message: "Role and experience level are required."
+    };
+  }
+
+  return {
+    success: true,
+    role,
+    level,
+    questions: [
+      `Tell us about your experience related to ${role}.`,
+      `What are your strongest skills for this position?`,
+      `Describe a challenging project you completed.`,
+      `How do you solve problems at work?`,
+      `How do you collaborate with a team?`,
+      `What would you like to achieve in this role?`,
+      `How do you approach learning new technologies?`,
+      `Describe how you handle changing priorities.`
+    ]
+  };
+}
+
+
+// 5. HR Assistant
+function hrAssistant(question) {
+  if (!question) {
+    return {
+      success: false,
+      message: "Please enter a question."
+    };
+  }
+
+  const q = question.toLowerCase();
+
+  const responses = [
+    {
+      keywords: ["resume", "cv"],
+      answer: "Review job-related skills, qualifications and relevant experience consistently."
+    },
+    {
+      keywords: ["interview"],
+      answer: "Use structured, job-related questions and consistent evaluation criteria."
+    },
+    {
+      keywords: ["hiring", "recruitment"],
+      answer: "Define role requirements, evaluate relevant evidence and maintain a fair hiring process."
+    },
+    {
+      keywords: ["job description"],
+      answer: "Include the role, responsibilities, qualifications and required skills."
+    }
   ];
+
+  const found = responses.find(item =>
+    item.keywords.some(word => q.includes(word))
+  );
+
+  return {
+    success: true,
+    answer: found
+      ? found.answer
+      : "Please provide more details about your HR question."
+  };
 }
 
-// Export functions for browser usage
-window.HireMindAI = {
-  analyzeResume,
-  matchCandidate,
-  createJobDescription,
-  createInterviewQuestions
-};
-    
+
+// 6. Engine Health Check
+function checkEngine() {
+  return {
+    success: true,
+    engine: "HIREMIND AI",
+    version: "1.0",
+    modules: [
+      "Resume Analyzer",
+      "Job Description Generator",
+      "Candidate Matching",
+      "Interview Assistant",
+      "HR Assistant"
+    ],
+    status: "Ready"
+  };
+}
