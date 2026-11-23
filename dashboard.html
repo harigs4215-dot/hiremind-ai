@@ -176,33 +176,30 @@ function analyzeResume() {
   const resume = document.getElementById("resumeText").value;
   const skills = document.getElementById("resumeSkills").value;
 
-  if (!window.HIREMIND_AI) {
-    alert("AI Engine not loaded. Please refresh.");
+  if (!window.HireMindAI) {
+    alert("HireMind AI engine not loaded.");
     return;
   }
 
-  const result = window.HIREMIND_AI.analyzeResume(
+  const result = window.HireMindAI.analyzeResume(
     resume,
     skills
   );
 
-  if (result.error) {
-    alert(result.error);
+  if (!result.success) {
+    alert(result.message);
     return;
   }
 
   const output =
     "HIREMIND AI RESUME REPORT\n\n" +
-    "Skill Coverage: " + result.coverage + "\n\n" +
-    "Matched Skills: " +
-    (result.matchedSkills.join(", ") || "None") +
-    "\n\nMissing Skills: " +
-    (result.missingSkills.join(", ") || "None") +
-    "\n\nRecommendation:\n" + result.recommendation;
+    "Skill Coverage: " + result.coverage + "%\n\n" +
+    "Matched Skills: " + (result.matched.join(", ") || "None") +
+    "\n\nMissing Skills: " + (result.missing.join(", ") || "None") +
+    "\n\n" + result.note;
 
   display("resumeResult", output);
 }
-
 function matchCandidate(){
 let c=document.getElementById('candidateSkills').value.toLowerCase().split(',').map(x=>x.trim()).filter(Boolean);
 let r=document.getElementById('requiredSkills').value.toLowerCase().split(',').map(x=>x.trim()).filter(Boolean);
