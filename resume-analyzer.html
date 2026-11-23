@@ -1,0 +1,199 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>HIREMIND AI | Resume Analyzer</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#f4f6fb;color:#172033;font-family:Arial,sans-serif}
+header{background:#101a35;color:white;padding:20px 7%;display:flex;justify-content:space-between;align-items:center}
+.logo{font-size:23px;font-weight:800}
+.logo span{color:#63a5ff}
+header a{color:white;text-decoration:none;font-size:14px}
+main{max-width:950px;margin:40px auto;padding:20px}
+h1{font-size:32px;margin-bottom:8px}
+.sub{color:#68758b;margin-bottom:25px}
+.card{background:white;border:1px solid #e3e8f1;border-radius:15px;padding:25px;margin-bottom:22px;box-shadow:0 8px 25px #17203308}
+label{display:block;font-weight:700;font-size:14px;margin:17px 0 8px}
+textarea,input{width:100%;padding:13px;border:1px solid #d7deea;border-radius:9px;font-size:14px;font-family:Arial}
+textarea{min-height:150px;resize:vertical}
+input[type=file]{background:#f8faff}
+button{border:0;border-radius:9px;padding:14px 20px;font-weight:700;cursor:pointer}
+.primary{background:#2869e8;color:white;width:100%;margin-top:20px}
+.secondary{background:#eaf1ff;color:#2059bd}
+button:hover{opacity:.88}
+.note{font-size:12px;color:#69768a;line-height:1.6}
+.hidden{display:none}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:20px 0}
+.stat{background:#f3f6fc;padding:17px;border-radius:10px;text-align:center}
+.stat strong{display:block;font-size:25px;color:#2869e8}
+.stat span{font-size:12px;color:#667085}
+.result-list{line-height:2;color:#344054}
+.tag{display:inline-block;background:#e8f5ed;color:#187342;padding:6px 10px;border-radius:20px;font-size:12px;margin:4px}
+.missing{background:#fff0e9;color:#a44b20}
+footer{text-align:center;padding:25px;color:#7a8495}
+@media(max-width:550px){main{margin:15px auto;padding:13px}.stats{gap:7px}.stat{padding:12px 5px}.stat strong{font-size:20px}}
+</style>
+</head>
+<body>
+
+<header>
+<div class="logo">HIREMIND<span> AI.</span></div>
+<a href="index.html">← Back to Home</a>
+</header>
+
+<main>
+<h1>AI Resume Analyzer</h1>
+<p class="sub">Review resume skills against job requirements.</p>
+
+<div class="card">
+<h2>1. Candidate Resume</h2>
+
+<label for="file">Upload a text resume (.txt)</label>
+<input type="file" id="file" accept=".txt,.md">
+
+<p class="note">Your selected text file is processed locally in this browser. It is not uploaded to a server.</p>
+
+<label for="resume">Or paste resume content</label>
+<textarea id="resume" placeholder="Paste candidate resume text here..."></textarea>
+
+<h2 style="margin-top:28px">2. Job Requirements</h2>
+<label for="requirements">Required skills and keywords</label>
+<textarea id="requirements" placeholder="Example: Python, JavaScript, SQL, React, communication, problem solving"></textarea>
+
+<button class="primary" onclick="analyze()">Analyze Resume</button>
+</div>
+
+<div class="card hidden" id="output">
+<h2>Analysis Report</h2>
+<p class="note">This is a basic keyword comparison, not an AI assessment or a hiring recommendation.</p>
+
+<div class="stats">
+<div class="stat"><strong id="matched">0</strong><span>Matched keywords</span></div>
+<div class="stat"><strong id="missingCount">0</strong><span>Not found</span></div>
+<div class="stat"><strong id="coverage">0%</strong><span>Keyword coverage</span></div>
+</div>
+
+<h3>Matching Keywords</h3>
+<div id="matchList" class="result-list"></div>
+
+<h3 style="margin-top:25px">Keywords Not Found</h3>
+<div id="missingList" class="result-list"></div>
+
+<h3 style="margin-top:25px">Summary</h3>
+<p id="summary" class="result-list"></p>
+
+<p class="note">Review the original resume and verify all qualifications with the candidate. Keyword absence does not prove a person lacks a skill. Do not use this report alone to make hiring decisions.</p>
+
+<button class="secondary" onclick="copyReport()">Copy Report</button>
+</div>
+</main>
+
+<footer>© 2026 HIREMIND AI. Smarter recruitment tools.</footer>
+
+<script>
+const fileInput=document.getElementById('file');
+
+fileInput.addEventListener('change',async function(){
+const file=this.files[0];
+if(!file)return;
+
+if(file.size>1024*1024){
+alert('Please select a text file smaller than 1 MB.');
+this.value='';
+return;
+}
+
+try{
+document.getElementById('resume').value=await file.text();
+}catch(error){
+alert('Unable to read this file. Please paste the resume text manually.');
+}
+});
+
+let report='';
+
+function analyze(){
+const resume=document.getElementById('resume').value.toLowerCase();
+const requirements=document.getElementById('requirements').value;
+
+if(!resume.trim()){
+alert('Please upload or paste resume content.');
+return;
+}
+
+if(!requirements.trim()){
+alert('Please enter job requirements.');
+return;
+}
+
+const skills=[...new Set(
+requirements.split(/[,;\n]+/)
+.map(s=>s.trim())
+.filter(s=>s.length>0)
+)];
+
+if(skills.length===0){
+alert('Please enter valid job keywords.');
+return;
+}
+
+const matched=skills.filter(skill=>
+resume.includes(skill.toLowerCase())
+);
+
+const missing=skills.filter(skill=>
+!resume.includes(skill.toLowerCase())
+);
+
+const percent=Math.round((matched.length/skills.length)*100);
+
+document.getElementById('matched').textContent=matched.length;
+document.getElementById('missingCount').textContent=missing.length;
+document.getElementById('coverage').textContent=percent+'%';
+
+document.getElementById('matchList').innerHTML=
+matched.length
+?matched.map(s=>'<span class="tag">'+escapeHTML(s)+'</span>').join('')
+:'No matching keywords found.';
+
+document.getElementById('missingList').innerHTML=
+missing.length
+?missing.map(s=>'<span class="tag missing">'+escapeHTML(s)+'</span>').join('')
+:'All entered keywords were found.';
+
+document.getElementById('summary').textContent=
+'Found '+matched.length+' of '+skills.length+
+' entered keywords in the resume text. Review the original resume to verify context, experience and qualifications.';
+
+report=
+'HIREMIND AI - RESUME KEYWORD REPORT\n\n'+
+'Matched: '+matched.join(', ')+'\n'+
+'Not found: '+missing.join(', ')+'\n'+
+'Keyword coverage: '+percent+'%\n\n'+
+'This is a basic keyword comparison, not a hiring recommendation.';
+
+document.getElementById('output').classList.remove('hidden');
+document.getElementById('output').scrollIntoView({behavior:'smooth'});
+}
+
+function escapeHTML(value){
+return value.replace(/[&<>"']/g,c=>({
+'&':'&amp;','<':'&lt;','>':'&gt;',
+'"':'&quot;',"'":'&#39;'
+}[c]));
+}
+
+async function copyReport(){
+try{
+await navigator.clipboard.writeText(report);
+alert('Report copied!');
+}catch(error){
+alert('Copy unavailable. Please copy the report manually.');
+}
+}
+</script>
+</body>
+</html>
