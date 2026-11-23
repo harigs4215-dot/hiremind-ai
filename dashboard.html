@@ -278,6 +278,66 @@ analytics:"Analytics",settings:"Settings"
 };
 const counts={jobs:0,resumes:0,candidates:0,interviews:0};
 
+let candidateList = [];
+
+function addCandidate() {
+  const name = document.getElementById("newCandidateName").value.trim();
+  const role = document.getElementById("newCandidateRole").value.trim();
+  const skills = document.getElementById("newCandidateSkills").value.trim();
+  const status = document.getElementById("newCandidateStatus").value;
+
+  if (!name || !role || !skills) {
+    alert("Please fill all candidate details.");
+    return;
+  }
+
+  candidateList.push({ name, role, skills, status });
+
+  renderCandidates();
+
+  document.getElementById("newCandidateName").value = "";
+  document.getElementById("newCandidateRole").value = "";
+  document.getElementById("newCandidateSkills").value = "";
+}
+
+function renderCandidates() {
+  const table = document.getElementById("candidateTable");
+  table.replaceChildren();
+
+  candidateList.forEach((candidate, index) => {
+    const row = document.createElement("tr");
+
+    [candidate.name, candidate.role, candidate.skills, candidate.status].forEach(value => {
+      const cell = document.createElement("td");
+      cell.textContent = value;
+      cell.style.padding = "12px 8px";
+      row.appendChild(cell);
+    });
+
+    const actionCell = document.createElement("td");
+    const deleteButton = document.createElement("button");
+
+    deleteButton.textContent = "Delete";
+    deleteButton.className = "secondary";
+    deleteButton.onclick = () => {
+      candidateList.splice(index, 1);
+      renderCandidates();
+    };
+
+    actionCell.appendChild(deleteButton);
+    row.appendChild(actionCell);
+    table.appendChild(row);
+  });
+
+  document.getElementById("totalCandidates").textContent = candidateList.length;
+  document.getElementById("shortlistedCandidates").textContent =
+    candidateList.filter(c => c.status === "Shortlisted").length;
+  document.getElementById("interviewCandidates").textContent =
+    candidateList.filter(c => c.status === "Interview").length;
+  document.getElementById("selectedCandidates").textContent =
+    candidateList.filter(c => c.status === "Selected").length;
+      }
+                                       
 
 function navigate(page) {
   const pages = document.querySelectorAll(".page");
