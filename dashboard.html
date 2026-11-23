@@ -136,17 +136,93 @@ label{font-size:13px;font-weight:bold}
 </div>
 </section>
 
+
 <section class="page" id="candidates">
+
+<div class="welcome">
+<h2>Candidate Management</h2>
+<p>Manage and track your recruitment pipeline.</p>
+</div>
+
+<div class="stats">
+<div class="card">
+<p>Total Candidates</p>
+<div class="number" id="totalCandidates">0</div>
+</div>
+<div class="card">
+<p>Shortlisted</p>
+<div class="number" id="shortlistedCandidates">0</div>
+</div>
+<div class="card">
+<p>Interview Stage</p>
+<div class="number" id="interviewCandidates">0</div>
+</div>
+<div class="card">
+<p>Selected</p>
+<div class="number" id="selectedCandidates">0</div>
+</div>
+</div>
+
+<div class="panel">
+<h3>Add New Candidate</h3>
+
+<label>Candidate Name</label>
+<input id="newCandidateName" placeholder="Enter candidate name">
+
+<label>Applied Position</label>
+<input id="newCandidateRole" placeholder="Software Developer">
+
+<label>Skills</label>
+<input id="newCandidateSkills" placeholder="HTML, CSS, JavaScript">
+
+<label>Application Status</label>
+<select id="newCandidateStatus">
+<option>Applied</option>
+<option>Shortlisted</option>
+<option>Interview</option>
+<option>Selected</option>
+</select>
+
+<button class="primary" onclick="addCandidate()">
++ Add Candidate
+</button>
+</div>
+
+<div class="panel">
+<h3>Candidate Database</h3>
+<div style="overflow-x:auto">
+<table style="width:100%;text-align:left;border-collapse:collapse">
+<thead>
+<tr>
+<th>Name</th>
+<th>Position</th>
+<th>Skills</th>
+<th>Status</th>
+<th>Action</th>
+</tr>
+</thead>
+<tbody id="candidateTable"></tbody>
+</table>
+</div>
+</div>
+
 <div class="panel">
 <h3>Candidate Skill Matching</h3>
-<p class="muted">Compare a candidate's listed skills with job requirements.</p>
 <label>Candidate Skills</label>
-<textarea id="candidateSkills" rows="5" placeholder="Enter candidate skills or resume text"></textarea>
+<textarea id="candidateSkills" rows="5"
+placeholder="Enter candidate skills"></textarea>
+
 <label>Job Required Skills</label>
-<input id="candidateRequired" placeholder="HTML, CSS, JavaScript">
-<button class="primary" onclick="runCandidateMatch()">Check Skill Match</button>
+<input id="candidateRequired"
+placeholder="HTML, CSS, JavaScript">
+
+<button class="primary" onclick="runCandidateMatch()">
+Check Skill Match
+</button>
+
 <div id="candidateResult"></div>
 </div>
+
 </section>
 
 <section class="page" id="interviews">
