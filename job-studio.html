@@ -1,0 +1,134 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>HIREMIND AI | Job Studio</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#f5f7fb;color:#172033;font-family:Arial,sans-serif}
+header{background:#101a35;color:white;padding:20px 7%;display:flex;justify-content:space-between;align-items:center}
+.logo{font-size:23px;font-weight:800}
+.logo span{color:#63a5ff}
+header a{color:white;text-decoration:none;font-size:14px}
+main{max-width:950px;margin:40px auto;padding:20px}
+h1{font-size:34px;margin-bottom:8px}
+.sub{color:#667085;margin-bottom:28px}
+.card{background:white;border:1px solid #e4e9f2;border-radius:16px;padding:25px;margin-bottom:22px;box-shadow:0 8px 30px #17203308}
+label{display:block;font-weight:700;font-size:14px;margin:16px 0 8px}
+input,select,textarea{width:100%;padding:13px;border:1px solid #d8dfeb;border-radius:9px;font-size:15px;background:white}
+textarea{min-height:95px;resize:vertical}
+button{border:0;border-radius:9px;padding:14px 20px;font-size:15px;font-weight:700;cursor:pointer}
+.primary{background:#2869e8;color:white;width:100%;margin-top:22px}
+.secondary{background:#eaf1ff;color:#2059bd}
+button:hover{opacity:.88}
+#result{white-space:pre-wrap;line-height:1.7;color:#344054;font-size:14px}
+.hidden{display:none}
+footer{text-align:center;color:#778399;padding:25px}
+</style>
+</head>
+<body>
+<header>
+<div class="logo">HIREMIND<span> AI.</span></div>
+<a href="index.html">← Back to Home</a>
+</header>
+<main>
+<h1>Job Description Studio</h1>
+<p class="sub">Create clear, professional job descriptions for your company.</p>
+
+<div class="card">
+<h2>Job Details</h2>
+
+<label for="title">Job Title</label>
+<input id="title" placeholder="e.g. Software Engineer">
+
+<label for="department">Department</label>
+<select id="department">
+<option>Engineering</option>
+<option>Human Resources</option>
+<option>Marketing</option>
+<option>Sales</option>
+<option>Finance</option>
+<option>Customer Support</option>
+<option>Operations</option>
+<option>Design</option>
+</select>
+
+<label for="level">Experience Level</label>
+<select id="level">
+<option>Entry Level</option>
+<option>Junior</option>
+<option>Mid Level</option>
+<option>Senior</option>
+<option>Manager</option>
+<option>Director</option>
+</select>
+
+<label for="location">Job Location</label>
+<input id="location" placeholder="e.g. Remote / Chennai / New York">
+
+<label for="skills">Required Skills</label>
+<textarea id="skills" placeholder="Enter skills separated by commas"></textarea>
+
+<label for="responsibilities">Key Responsibilities</label>
+<textarea id="responsibilities" placeholder="Describe the main responsibilities"></textarea>
+
+<button class="primary" onclick="generate()">Generate Job Description</button>
+</div>
+
+<div class="card hidden" id="outputCard">
+<h2>Your Job Description</h2>
+<div id="result"></div>
+<button class="secondary" onclick="copyResult()">Copy Description</button>
+</div>
+</main>
+
+<footer>© 2026 HIREMIND AI. Built for smarter recruitment.</footer>
+
+<script>
+function generate(){
+const title=document.getElementById('title').value.trim();
+const dept=document.getElementById('department').value;
+const level=document.getElementById('level').value;
+const location=document.getElementById('location').value.trim();
+const skills=document.getElementById('skills').value.trim();
+const responsibilities=document.getElementById('responsibilities').value.trim();
+
+if(!title||!skills){
+alert('Please enter a job title and required skills.');
+return;
+}
+
+const description=
+'JOB TITLE: '+title+'\n'+
+'DEPARTMENT: '+dept+'\n'+
+'EXPERIENCE: '+level+'\n'+
+'LOCATION: '+(location||'To be decided')+'\n\n'+
+'ABOUT THE ROLE\n'+
+'We are looking for a '+title+' to join our '+dept+' team. The successful candidate will contribute to team goals and help deliver high-quality results.\n\n'+
+'KEY RESPONSIBILITIES\n'+
+(responsibilities||'• Complete assigned duties and collaborate with the team.\n• Contribute to projects and achieve agreed objectives.')+'\n\n'+
+'REQUIRED SKILLS\n'+skills+'\n\n'+
+'IDEAL CANDIDATE\n'+
+'• Strong communication and problem-solving abilities.\n• Ability to collaborate and work responsibly.\n• Willingness to learn and grow professionally.\n\n'+
+'APPLICATION\n'+
+'Interested candidates can apply through the company recruitment process.';
+
+document.getElementById('result').textContent=description;
+document.getElementById('outputCard').classList.remove('hidden');
+document.getElementById('outputCard').scrollIntoView({behavior:'smooth'});
+}
+
+function copyResult(){
+const text=document.getElementById('result').textContent;
+if(navigator.clipboard){
+navigator.clipboard.writeText(text).then(()=>alert('Job description copied!')).catch(()=>alert('Please select and copy the text manually.'));
+}else{
+alert('Please select and copy the text manually.');
+}
+}
+</script>
+</body>
+  </html>
+  
