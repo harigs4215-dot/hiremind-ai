@@ -362,6 +362,40 @@ body {
 
   <div id="resumeResult" style="margin-top:20px;"></div>
 </div>
+
+<!-- JOB DESCRIPTION GENERATOR -->
+<div class="section" id="jobStudio">
+  <h3>AI Job Description Generator</h3>
+
+  <label>Job Title</label>
+  <input id="jobTitle"
+    type="text"
+    placeholder="Example: Software Developer"
+    style="width:100%;padding:12px;margin:12px 0;border:1px solid #ddd;border-radius:8px;">
+
+  <label>Required Skills</label>
+  <input id="jobSkills"
+    type="text"
+    placeholder="HTML, CSS, JavaScript"
+    style="width:100%;padding:12px;margin:12px 0;border:1px solid #ddd;border-radius:8px;">
+
+  <label>Experience Level</label>
+  <select id="jobExperience"
+    style="width:100%;padding:12px;margin:12px 0;border:1px solid #ddd;border-radius:8px;">
+    <option value="">Select experience</option>
+    <option>Fresher</option>
+    <option>1-2 Years</option>
+    <option>3-5 Years</option>
+    <option>5+ Years</option>
+  </select>
+
+  <button onclick="runJobGenerator()"
+    style="background:#2563eb;color:white;padding:12px 20px;border:0;border-radius:8px;">
+    Generate Job Description
+  </button>
+
+  <div id="jobResult" style="margin-top:20px;"></div>
+</div>
 </main>
 </div>
 
