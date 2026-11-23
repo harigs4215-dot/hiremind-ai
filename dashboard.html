@@ -3,481 +3,289 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>HIREMIND AI | HR Dashboard</title>
-
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>HIREMIND AI | HR Platform</title>
 <style>
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: Arial, sans-serif;
-}
-
-body {
-  background: #f5f7fb;
-  color: #172033;
-}
-
-.layout {
-  display: flex;
-  min-height: 100vh;
-}
-
-.sidebar {
-  width: 245px;
-  background: #111827;
-  color: white;
-  padding: 28px 18px;
-}
-
-.logo {
-  font-size: 22px;
-  font-weight: bold;
-  margin-bottom: 38px;
-}
-
-.logo span {
-  color: #60a5fa;
-}
-
-.nav-title {
-  color: #94a3b8;
-  font-size: 11px;
-  margin: 25px 10px 12px;
-}
-
-.nav button {
-  width: 100%;
-  background: transparent;
-  border: none;
-  color: #cbd5e1;
-  padding: 14px 12px;
-  text-align: left;
-  border-radius: 9px;
-  margin-bottom: 6px;
-  cursor: pointer;
-  font-size: 14px;
-}
-
-.nav button:hover,
-.nav button.active {
-  background: #263449;
-  color: white;
-}
-
-.main {
-  flex: 1;
-  padding: 30px;
-  min-width: 0;
-}
-
-.topbar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 15px;
-  margin-bottom: 35px;
-}
-
-.topbar p {
-  color: #64748b;
-  margin-top: 7px;
-  font-size: 14px;
-}
-
-.profile {
-  background: white;
-  padding: 12px 17px;
-  border-radius: 10px;
-  font-size: 13px;
-}
-
-.welcome {
-  margin-bottom: 25px;
-}
-
-.welcome p {
-  color: #64748b;
-  margin-top: 8px;
-}
-
-.stats {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 18px;
-  margin-bottom: 25px;
-}
-
-.card {
-  background: white;
-  padding: 23px;
-  border-radius: 14px;
-  border: 1px solid #e8edf5;
-}
-
-.card p {
-  color: #64748b;
-  font-size: 13px;
-}
-
-.number {
-  font-size: 30px;
-  font-weight: bold;
-  margin-top: 15px;
-}
-
-.section {
-  background: white;
-  border: 1px solid #e8edf5;
-  padding: 25px;
-  border-radius: 14px;
-  margin-bottom: 20px;
-}
-
-.section h3 {
-  margin-bottom: 18px;
-}
-
-.actions {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 14px;
-}
-
-.action {
-  border: 1px solid #e2e8f0;
-  background: #f8fafc;
-  padding: 20px;
-  border-radius: 10px;
-}
-
-.action h4 {
-  margin-bottom: 9px;
-}
-
-.action p {
-  color: #64748b;
-  font-size: 13px;
-  margin-bottom: 15px;
-}
-
-.action button {
-  background: #2563eb;
-  color: white;
-  border: none;
-  padding: 10px 15px;
-  border-radius: 7px;
-  cursor: pointer;
-}
-
-.activity {
-  color: #64748b;
-  font-size: 14px;
-  line-height: 2;
-}
-
-#message {
-  margin-top: 15px;
-  color: #2563eb;
-  font-size: 14px;
-}
-
-@media(max-width: 900px) {
-  .stats {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-
-@media(max-width: 600px) {
-  .sidebar {
-    width: 75px;
-    padding: 20px 8px;
-  }
-
-  .logo {
-    font-size: 11px;
-    overflow-wrap: anywhere;
-  }
-
-  .nav-title {
-    display: none;
-  }
-
-  .nav button {
-    font-size: 11px;
-    padding: 12px 5px;
-    text-align: center;
-  }
-
-  .main {
-    padding: 17px 12px;
-  }
-
-  .stats {
-    grid-template-columns: 1fr 1fr;
-    gap: 10px;
-  }
-
-  .card {
-    padding: 15px;
-  }
-
-  .number {
-    font-size: 24px;
-  }
-
-  .actions {
-    grid-template-columns: 1fr;
-  }
-
-  .topbar {
-    align-items: flex-start;
-  }
+*{box-sizing:border-box;margin:0;padding:0;font-family:Arial,sans-serif}
+body{background:#f4f6fb;color:#172033}
+.app{display:flex;min-height:100vh}
+.sidebar{width:245px;background:#111827;color:white;padding:25px 15px;flex-shrink:0}
+.logo{font-size:22px;font-weight:bold;padding:10px;margin-bottom:35px}
+.logo span{color:#60a5fa}
+.nav-label{font-size:11px;color:#94a3b8;margin:22px 10px 10px}
+.nav button{width:100%;border:0;background:transparent;color:#cbd5e1;text-align:left;padding:13px 12px;margin:3px 0;border-radius:8px;cursor:pointer}
+.nav button:hover,.nav button.active{background:#263449;color:white}
+.main{flex:1;min-width:0;padding:28px}
+.top{display:flex;justify-content:space-between;align-items:center;margin-bottom:30px;gap:10px}
+.muted{color:#64748b;font-size:13px;margin-top:7px}
+.profile{background:white;padding:12px;border-radius:9px;font-size:13px}
+.page{display:none}
+.page.active{display:block}
+.welcome{margin-bottom:25px}
+.welcome p{color:#64748b;margin-top:8px}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:15px;margin-bottom:22px}
+.card,.panel{background:white;border:1px solid #e6eaf1;border-radius:13px;padding:22px;margin-bottom:18px}
+.card p{font-size:13px;color:#64748b}
+.number{font-size:29px;font-weight:bold;margin-top:12px}
+.panel h3{margin-bottom:17px}
+.tools{display:grid;grid-template-columns:repeat(2,1fr);gap:13px}
+.tool{padding:18px;background:#f8fafc;border:1px solid #e5eaf1;border-radius:10px}
+.tool p{font-size:13px;color:#64748b;margin:9px 0}
+button.primary{background:#2563eb;color:white;border:0;padding:11px 17px;border-radius:8px;cursor:pointer}
+button.secondary{background:#e8efff;color:#1d4ed8;border:0;padding:10px 14px;border-radius:8px;cursor:pointer}
+input,textarea,select{width:100%;padding:12px;margin:9px 0 17px;border:1px solid #dce2eb;border-radius:8px;background:white;font-size:14px}
+textarea{resize:vertical}
+label{font-size:13px;font-weight:bold}
+.result{background:#f1f5f9;padding:16px;border-radius:9px;margin-top:16px;white-space:pre-wrap;overflow-wrap:anywhere}
+.result h2{margin-bottom:10px}
+.small{font-size:12px;color:#64748b;margin-top:8px}
+@media(max-width:850px){.stats{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:600px){
+.app{display:block}
+.sidebar{width:100%;padding:12px}
+.logo{margin:0 0 10px}
+.nav{display:flex;overflow-x:auto;gap:5px}
+.nav-label{display:none}
+.nav button{min-width:max-content;width:auto;padding:11px}
+.main{padding:16px 12px}
+.stats{gap:8px}
+.card{padding:14px}
+.number{font-size:23px}
+.tools{grid-template-columns:1fr}
+.top{align-items:flex-start}
 }
 </style>
 </head>
-
 <body>
-
-<div class="layout">
-
+<div class="app">
 <aside class="sidebar">
-  <div class="logo">HIREMIND <span>AI</span></div>
-
-  <div class="nav">
-    <div class="nav-title">WORKSPACE</div>
-    <button class="active" onclick="showPage('Dashboard')">Dashboard</button>
-    <button onclick="showPage('Job Studio')">Job Studio</button>
-    <button onclick="showPage('Resume Analyzer')">Resume Analyzer</button>
-    <button onclick="showPage('Candidates')">Candidates</button>
-    <button onclick="showPage('Interviews')">Interviews</button>
-
-    <div class="nav-title">MANAGEMENT</div>
-    <button onclick="showPage('Analytics')">Analytics</button>
-    <button onclick="showPage('Settings')">Settings</button>
-  </div>
+<div class="logo">HIREMIND <span>AI</span></div>
+<div class="nav">
+<div class="nav-label">WORKSPACE</div>
+<button class="active" data-page="dashboard">Dashboard</button>
+<button data-page="jobs">Job Studio</button>
+<button data-page="resume">Resume Analyzer</button>
+<button data-page="candidates">Candidates</button>
+<button data-page="interviews">Interviews</button>
+<div class="nav-label">MANAGEMENT</div>
+<button data-page="analytics">Analytics</button>
+<button data-page="settings">Settings</button>
+</div>
 </aside>
 
 <main class="main">
-
-<header class="topbar">
-  <div>
-    <h2 id="pageTitle">Dashboard</h2>
-    <p>AI-powered recruitment workspace</p>
-  </div>
-  <div class="profile">HR Administrator</div>
+<header class="top">
+<div>
+<h2 id="pageTitle">Dashboard</h2>
+<p class="muted">AI-powered recruitment workspace</p>
+</div>
+<div class="profile">HR Administrator</div>
 </header>
 
+<section class="page active" id="dashboard">
 <div class="welcome">
-  <h2>Welcome to HIREMIND AI 👋</h2>
-  <p>Manage your recruitment process intelligently.</p>
+<h2>Welcome to HIREMIND AI</h2>
+<p>Manage your recruitment workflow from one workspace.</p>
 </div>
-
 <div class="stats">
-
-  <div class="card">
-    <p>Total Jobs</p>
-    <div class="number">0</div>
-  </div>
-
-  <div class="card">
-    <p>Total Candidates</p>
-    <div class="number">0</div>
-  </div>
-
-  <div class="card">
-    <p>Interviews</p>
-    <div class="number">0</div>
-  </div>
-
-  <div class="card">
-    <p>Successful Hires</p>
-    <div class="number">0</div>
-  </div>
-
+<div class="card"><p>Total Jobs</p><div class="number" id="jobCount">0</div></div>
+<div class="card"><p>Resumes Analyzed</p><div class="number" id="resumeCount">0</div></div>
+<div class="card"><p>Interviews Prepared</p><div class="number" id="interviewCount">0</div></div>
+<div class="card"><p>Candidate Checks</p><div class="number" id="candidateCount">0</div></div>
 </div>
-
-<div class="section">
-  <h3>AI Recruitment Tools</h3>
-
-  <div class="actions">
-
-    <div class="action">
-      <h4>Job Description Generator</h4>
-      <p>Create professional job descriptions using AI.</p>
-      <button onclick="showPage('Job Studio')">Open Tool</button>
-    </div>
-
-    <div class="action">
-      <h4>Resume Analyzer</h4>
-      <p>Analyze resume skills and qualifications.</p>
-      <button onclick="showPage('Resume Analyzer')">Analyze Resume</button>
-    </div>
-
-    <div class="action">
-      <h4>Candidate Matching</h4>
-      <p>Find suitable candidates for job roles.</p>
-      <button onclick="showPage('Candidates')">Find Candidates</button>
-    </div>
-
-    <div class="action">
-      <h4>Interview Assistant</h4>
-      <p>Prepare interview questions for recruitment.</p>
-      <button onclick="showPage('Interviews')">Open Assistant</button>
-    </div>
-
-  </div>
-  <div id="message"></div>
+<div class="panel">
+<h3>Recruitment Tools</h3>
+<div class="tools">
+<div class="tool"><h4>Job Description Generator</h4><p>Create structured job descriptions.</p><button class="primary" onclick="navigate('jobs')">Open Tool</button></div>
+<div class="tool"><h4>Resume Analyzer</h4><p>Compare resume text with role skills.</p><button class="primary" onclick="navigate('resume')">Open Tool</button></div>
+<div class="tool"><h4>Candidate Matching</h4><p>Review skill overlap with a job.</p><button class="primary" onclick="navigate('candidates')">Open Tool</button></div>
+<div class="tool"><h4>Interview Assistant</h4><p>Prepare structured interview questions.</p><button class="primary" onclick="navigate('interviews')">Open Tool</button></div>
 </div>
-
-<div class="section">
-  <h3>Recent Activity</h3>
-  <div class="activity">
-    No recruitment activity yet.<br>
-    Your recruitment activities will appear here.
-  </div>
 </div>
+</section>
 
-<!-- RESUME ANALYZER -->
-<div class="section" id="resumeAnalyzer">
-  <h3>AI Resume Analyzer</h3>
-
-  <label>Candidate Resume</label>
-  <textarea id="resumeText"
-    placeholder="Paste candidate resume text here..."
-    rows="7"
-    style="width:100%;padding:12px;margin:12px 0;border:1px solid #ddd;border-radius:8px;"></textarea>
-
-  <label>Required Skills (comma separated)</label>
-  <input id="requiredSkills"
-    type="text"
-    placeholder="JavaScript, HTML, CSS, React"
-    style="width:100%;padding:12px;margin:12px 0;border:1px solid #ddd;border-radius:8px;">
-
-  <button onclick="runResumeAnalysis()"
-    style="background:#2563eb;color:white;padding:12px 20px;border:0;border-radius:8px;">
-    Analyze Resume
-  </button>
-
-  <div id="resumeResult" style="margin-top:20px;"></div>
+<section class="page" id="jobs">
+<div class="panel">
+<h3>AI Job Description Generator</h3>
+<label>Job Title</label>
+<input id="jobTitle" placeholder="e.g. Software Developer">
+<label>Required Skills</label>
+<input id="jobSkills" placeholder="HTML, CSS, JavaScript, React">
+<label>Experience</label>
+<select id="jobExperience">
+<option value="">Select experience</option>
+<option>Fresher</option>
+<option>1-2 Years</option>
+<option>3-5 Years</option>
+<option>5+ Years</option>
+</select>
+<button class="primary" onclick="runJobGenerator()">Generate Description</button>
+<div id="jobResult"></div>
 </div>
+</section>
 
-<!-- JOB DESCRIPTION GENERATOR -->
-<div class="section" id="jobStudio">
-  <h3>AI Job Description Generator</h3>
-
-  <label>Job Title</label>
-  <input id="jobTitle"
-    type="text"
-    placeholder="Example: Software Developer"
-    style="width:100%;padding:12px;margin:12px 0;border:1px solid #ddd;border-radius:8px;">
-
-  <label>Required Skills</label>
-  <input id="jobSkills"
-    type="text"
-    placeholder="HTML, CSS, JavaScript"
-    style="width:100%;padding:12px;margin:12px 0;border:1px solid #ddd;border-radius:8px;">
-
-  <label>Experience Level</label>
-  <select id="jobExperience"
-    style="width:100%;padding:12px;margin:12px 0;border:1px solid #ddd;border-radius:8px;">
-    <option value="">Select experience</option>
-    <option>Fresher</option>
-    <option>1-2 Years</option>
-    <option>3-5 Years</option>
-    <option>5+ Years</option>
-  </select>
-
-  <button onclick="runJobGenerator()"
-    style="background:#2563eb;color:white;padding:12px 20px;border:0;border-radius:8px;">
-    Generate Job Description
-  </button>
-
-  <div id="jobResult" style="margin-top:20px;"></div>
+<section class="page" id="resume">
+<div class="panel">
+<h3>Resume Analyzer</h3>
+<label>Resume Text</label>
+<textarea id="resumeText" rows="8" placeholder="Paste resume text here"></textarea>
+<label>Required Skills (comma separated)</label>
+<input id="requiredSkills" placeholder="HTML, CSS, JavaScript, Python">
+<button class="primary" onclick="runResumeAnalysis()">Analyze Resume</button>
+<div id="resumeResult"></div>
 </div>
+</section>
+
+<section class="page" id="candidates">
+<div class="panel">
+<h3>Candidate Skill Matching</h3>
+<p class="muted">Compare a candidate's listed skills with job requirements.</p>
+<label>Candidate Skills</label>
+<textarea id="candidateSkills" rows="5" placeholder="Enter candidate skills or resume text"></textarea>
+<label>Job Required Skills</label>
+<input id="candidateRequired" placeholder="HTML, CSS, JavaScript">
+<button class="primary" onclick="runCandidateMatch()">Check Skill Match</button>
+<div id="candidateResult"></div>
+</div>
+</section>
+
+<section class="page" id="interviews">
+<div class="panel">
+<h3>Interview Assistant</h3>
+<label>Job Role</label>
+<input id="interviewRole" placeholder="e.g. Frontend Developer">
+<label>Experience Level</label>
+<select id="interviewLevel">
+<option value="">Select level</option>
+<option>Fresher</option>
+<option>Junior</option>
+<option>Mid-level</option>
+<option>Senior</option>
+</select>
+<button class="primary" onclick="runInterviewGenerator()">Generate Questions</button>
+<div id="interviewResult"></div>
+</div>
+</section>
+
+<section class="page" id="analytics">
+<div class="panel">
+<h3>Recruitment Analytics</h3>
+<p class="muted">Session activity counters for this browser.</p>
+<div class="stats">
+<div class="card"><p>Jobs generated</p><div class="number" id="aJobs">0</div></div>
+<div class="card"><p>Resumes checked</p><div class="number" id="aResumes">0</div></div>
+<div class="card"><p>Candidate checks</p><div class="number" id="aCandidates">0</div></div>
+<div class="card"><p>Interview sets</p><div class="number" id="aInterviews">0</div></div>
+</div>
+<p class="small">These are local session counts, not live company-wide analytics.</p>
+</div>
+</section>
+
+<section class="page" id="settings">
+<div class="panel">
+<h3>Settings</h3>
+<p>HIREMIND AI · Dashboard Version 2.0</p>
+<p class="muted">Engine: JavaScript utility functions</p>
+<p class="muted">Storage: Current browser session only</p>
+<p class="muted">AI API: Not connected yet</p>
+</div>
+</section>
 </main>
 </div>
 
-<script>
-function showPage(page) {
-  document.getElementById("pageTitle").textContent = page;
-
-  document.getElementById("message").textContent =
-    page === "Dashboard"
-      ? "Dashboard opened successfully."
-      : page + " module selected.";
-
-  document.querySelectorAll(".nav button").forEach(btn => {
-    btn.classList.toggle(
-      "active",
-      btn.textContent.trim() === page
-    );
-  });
-
-  if (page === "Resume Analyzer") {
-    document.getElementById("resumeAnalyzer")
-      .scrollIntoView({ behavior: "smooth" });
-  }
-}
-
-function runResumeAnalysis() {
-  const resume = document.getElementById("resumeText").value;
-  const skills = document.getElementById("requiredSkills").value;
-  const output = document.getElementById("resumeResult");
-
-  if (typeof analyzeResume !== "function") {
-    output.textContent = "AI Engine not loaded. Check ai-engine.js.";
-    return;
-  }
-
-  const result = analyzeResume(resume, skills);
-
-  if (!result.success) {
-    output.textContent = result.message;
-    return;
-  }
-
-  output.textContent =
-    "Match Score: " + result.score + "%\n" +
-    "Matched Skills: " + result.matchedSkills.join(", ") + "\n" +
-    "Missing Skills: " + result.missingSkills.join(", ") + "\n" +
-    "Result: " + result.recommendation;
-}
-
-function runJobGenerator() {
-  const role = document.getElementById("jobTitle").value;
-  const skills = document.getElementById("jobSkills").value;
-  const experience = document.getElementById("jobExperience").value;
-  const output = document.getElementById("jobResult");
-
-  if (typeof generateJobDescription !== "function") {
-    output.textContent = "AI Engine not loaded.";
-    return;
-  }
-
-  const result = generateJobDescription(role, skills, experience);
-
-  if (!result.success) {
-    output.textContent = result.message;
-    return;
-  }
-
-  const heading = document.createElement("h3");
-  heading.textContent = "Generated Job Description";
-
-  const content = document.createElement("pre");
-  content.textContent = result.description;
-  content.style.whiteSpace = "pre-wrap";
-  content.style.background = "#f8fafc";
-  content.style.padding = "15px";
-  content.style.borderRadius = "8px";
-
-  output.replaceChildren(heading, content);
-  }
-  </script>
-
 <script src="./ai-engine.js"></script>
+<script>
+const titles={
+dashboard:"Dashboard",jobs:"Job Studio",resume:"Resume Analyzer",
+candidates:"Candidates",interviews:"Interviews",
+analytics:"Analytics",settings:"Settings"
+};
+const counts={jobs:0,resumes:0,candidates:0,interviews:0};
 
+function navigate(page){
+document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
+document.querySelectorAll(".nav button").forEach(b=>b.classList.remove("active"));
+const target=document.getElementById(page);
+if(!target)return;
+target.classList.add("active");
+const button=document.querySelector('[data-page="'+page+'"]');
+if(button)button.classList.add("active");
+document.getElementById("pageTitle").textContent=titles[page];
+window.scrollTo({top:0,behavior:"smooth"});
+}
+document.querySelectorAll(".nav button").forEach(button=>{
+button.addEventListener("click",()=>navigate(button.dataset.page));
+});
+
+function showResult(id,title,text){
+const box=document.getElementById(id);
+box.replaceChildren();
+const heading=document.createElement("h3");
+heading.textContent=title;
+const content=document.createElement("div");
+content.className="result";
+content.textContent=text;
+box.append(heading,content);
+}
+
+function updateCounts(){
+document.getElementById("jobCount").textContent=counts.jobs;
+document.getElementById("resumeCount").textContent=counts.resumes;
+document.getElementById("interviewCount").textContent=counts.interviews;
+document.getElementById("candidateCount").textContent=counts.candidates;
+document.getElementById("aJobs").textContent=counts.jobs;
+document.getElementById("aResumes").textContent=counts.resumes;
+document.getElementById("aCandidates").textContent=counts.candidates;
+document.getElementById("aInterviews").textContent=counts.interviews;
+}
+
+function runJobGenerator(){
+const role=document.getElementById("jobTitle").value.trim();
+const skills=document.getElementById("jobSkills").value.trim();
+const experience=document.getElementById("jobExperience").value;
+if(!role||!skills||!experience){showResult("jobResult","Missing information","Please enter the job title, required skills and experience.");return;}
+if(typeof generateJobDescription!=="function"){showResult("jobResult","Engine unavailable","Check that ai-engine.js exists and loads successfully.");return;}
+const result=generateJobDescription(role,skills,experience);
+if(!result.success){showResult("jobResult","Could not generate",result.message);return;}
+counts.jobs++;updateCounts();
+showResult("jobResult","Generated Job Description",result.description);
+}
+
+function runResumeAnalysis(){
+const resume=document.getElementById("resumeText").value.trim();
+const skills=document.getElementById("requiredSkills").value.trim();
+if(!resume||!skills){showResult("resumeResult","Missing information","Enter resume text and required skills.");return;}
+if(typeof analyzeResume!=="function"){showResult("resumeResult","Engine unavailable","Check that ai-engine.js exists and loads successfully.");return;}
+const result=analyzeResume(resume,skills);
+if(!result.success){showResult("resumeResult","Analysis error",result.message);return;}
+counts.resumes++;updateCounts();
+showResult("resumeResult","Skill Comparison",
+"Match score: "+result.score+"%\nMatched skills: "+(result.matchedSkills.join(", ")||"None")+"\nMissing skills: "+(result.missingSkills.join(", ")||"None")+"\n\nThis is a basic text-based skill comparison, not an assessment of candidate suitability.");
+}
+
+function runCandidateMatch(){
+const resume=document.getElementById("candidateSkills").value.trim();
+const skills=document.getElementById("candidateRequired").value.trim();
+if(!resume||!skills){showResult("candidateResult","Missing information","Enter candidate skills and job requirements.");return;}
+if(typeof matchCandidate!=="function"){showResult("candidateResult","Engine unavailable","Check ai-engine.js.");return;}
+const result=matchCandidate(resume,skills);
+if(!result.success){showResult("candidateResult","Matching error",result.message);return;}
+counts.candidates++;updateCounts();
+showResult("candidateResult","Skill Match",
+"Skill overlap: "+result.matchScore+"%\nMatched: "+(result.matchedSkills.join(", ")||"None")+"\nNot found in text: "+(result.missingSkills.join(", ")||"None")+"\n\nUse this only as a review aid. Do not use it as an automated hiring decision.");
+}
+
+function runInterviewGenerator(){
+const role=document.getElementById("interviewRole").value.trim();
+const level=document.getElementById("interviewLevel").value;
+if(!role||!level){showResult("interviewResult","Missing information","Enter a job role and experience level.");return;}
+if(typeof generateInterviewQuestions!=="function"){showResult("interviewResult","Engine unavailable","Check ai-engine.js.");return;}
+const result=generateInterviewQuestions(role,level);
+if(!result.success){showResult("interviewResult","Error",result.message);return;}
+counts.interviews++;updateCounts();
+showResult("interviewResult","Interview Questions",result.questions.map((q,i)=>(i+1)+". "+q).join("\n"));
+}
+updateCounts();
+</script>
 </body>
 </html>
