@@ -339,28 +339,80 @@ body {
   </div>
 </div>
 
+<!-- RESUME ANALYZER -->
+<div class="section" id="resumeAnalyzer">
+  <h3>AI Resume Analyzer</h3>
+
+  <label>Candidate Resume</label>
+  <textarea id="resumeText"
+    placeholder="Paste candidate resume text here..."
+    rows="7"
+    style="width:100%;padding:12px;margin:12px 0;border:1px solid #ddd;border-radius:8px;"></textarea>
+
+  <label>Required Skills (comma separated)</label>
+  <input id="requiredSkills"
+    type="text"
+    placeholder="JavaScript, HTML, CSS, React"
+    style="width:100%;padding:12px;margin:12px 0;border:1px solid #ddd;border-radius:8px;">
+
+  <button onclick="runResumeAnalysis()"
+    style="background:#2563eb;color:white;padding:12px 20px;border:0;border-radius:8px;">
+    Analyze Resume
+  </button>
+
+  <div id="resumeResult" style="margin-top:20px;"></div>
+</div>
 </main>
 </div>
 
 <script>
 function showPage(page) {
   document.getElementById("pageTitle").textContent = page;
+
   document.getElementById("message").textContent =
     page === "Dashboard"
       ? "Dashboard opened successfully."
-      : page + " module selected. Integration is coming next.";
-  
+      : page + " module selected.";
+
   document.querySelectorAll(".nav button").forEach(btn => {
     btn.classList.toggle(
       "active",
       btn.textContent.trim() === page
     );
   });
+
+  if (page === "Resume Analyzer") {
+    document.getElementById("resumeAnalyzer")
+      .scrollIntoView({ behavior: "smooth" });
+  }
+}
+
+function runResumeAnalysis() {
+  const resume = document.getElementById("resumeText").value;
+  const skills = document.getElementById("requiredSkills").value;
+  const output = document.getElementById("resumeResult");
+
+  if (typeof analyzeResume !== "function") {
+    output.textContent = "AI Engine not loaded. Check ai-engine.js.";
+    return;
+  }
+
+  const result = analyzeResume(resume, skills);
+
+  if (!result.success) {
+    output.textContent = result.message;
+    return;
+  }
+
+  output.textContent =
+    "Match Score: " + result.score + "%\n" +
+    "Matched Skills: " + result.matchedSkills.join(", ") + "\n" +
+    "Missing Skills: " + result.missingSkills.join(", ") + "\n" +
+    "Result: " + result.recommendation;
 }
 </script>
 
-<!-- HIREMIND AI ENGINE -->
-<script src="ai-engine.js"></script>
+<script src="./ai-engine.js"></script>
 
 </body>
 </html>
