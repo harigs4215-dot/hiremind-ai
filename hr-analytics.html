@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#101a35">
+<title>HIREMIND AI | HR Analytics</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#f3f5fa;color:#18243a;font-family:Arial,sans-serif}
+header{background:#101a35;color:white;padding:19px 6%;display:flex;align-items:center;justify-content:space-between}
+.logo{font-size:23px;font-weight:800}
+.logo span{color:#68a8ff}
+header a{color:white;text-decoration:none;font-size:13px}
+main{max-width:1150px;margin:30px auto;padding:15px}
+.top{display:flex;justify-content:space-between;align-items:center;gap:15px;flex-wrap:wrap}
+h1{font-size:29px;margin:0 0 8px}
+.muted{color:#78849a;font-size:13px}
+select,button{padding:11px 14px;border-radius:8px;border:1px solid #dce2ec;background:white;font-size:13px}
+button{cursor:pointer;font-weight:700}
+button:hover{opacity:.85}
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:15px;margin:25px 0}
+.card{background:white;border:1px solid #e7ebf2;border-radius:13px;padding:20px;box-shadow:0 5px 20px #18243a08}
+.metric{font-size:29px;font-weight:800;margin:14px 0 6px}
+.metric-label{font-size:13px;color:#758197}
+.metric-icon{font-size:22px;color:#3978e9}
+.change{font-size:11px;color:#18865c;margin-top:10px}
+.panels{display:grid;grid-template-columns:1.5fr 1fr;gap:16px}
+h2{font-size:18px;margin:0 0 8px}
+h3{font-size:14px;margin:22px 0 12px}
+.chart{height:210px;display:flex;align-items:end;gap:12px;padding:15px 4px 0}
+.bar-group{height:100%;flex:1;display:flex;flex-direction:column;justify-content:end;align-items:center;gap:8px}
+.bar{width:75%;max-width:42px;background:#4380ec;border-radius:6px 6px 2px 2px;min-height:4px}
+.bar.alt{background:#8bb6ff}
+.bar-label{font-size:11px;color:#78849a}
+.bar-value{font-size:10px;color:#65748d}
+.pipeline{display:flex;flex-direction:column;gap:15px;margin-top:22px}
+.pipe-row{display:grid;grid-template-columns:95px 1fr 35px;align-items:center;gap:9px;font-size:12px}
+.track{height:11px;background:#edf1f7;border-radius:20px;overflow:hidden}
+.fill{height:100%;background:#4380ec;border-radius:20px}
+.source-row{display:flex;align-items:center;gap:10px;margin:18px 0}
+.source-dot{width:11px;height:11px;border-radius:50%;background:#4380ec}
+.source-row span{font-size:13px}
+.source-row strong{margin-left:auto;font-size:13px}
+.table-wrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse;min-width:450px}
+th,td{text-align:left;padding:14px 10px;border-bottom:1px solid #edf0f5;font-size:13px}
+th{color:#748096;font-size:11px}
+.status{padding:5px 9px;background:#e7f5ed;color:#18764b;border-radius:20px;font-size:11px}
+.status.pending{background:#fff2dd;color:#95621b}
+.note{font-size:11px;color:#8490a2;line-height:1.6;margin-top:18px}
+footer{text-align:center;padding:30px;color:#8993a5;font-size:12px}
+.actions{display:flex;gap:8px;flex-wrap:wrap}
+.primary{background:#3274e8;color:white;border-color:#3274e8}
+@media(max-width:750px){
+main{padding:13px}
+.grid{grid-template-columns:repeat(2,1fr);gap:10px}
+.panels{grid-template-columns:1fr}
+.card{padding:16px}
+.metric{font-size:25px}
+h1{font-size:24px}
+}
+</style>
+</head>
+<body>
+
+<header>
+<div class="logo">HIREMIND <span>AI.</span></div>
+<a href="index.html">← Back to Home</a>
+</header>
+
+<main>
+<div class="top">
+<div>
+<h1>HR Analytics Dashboard</h1>
+<p class="muted">Recruitment performance and hiring overview</p>
+</div>
+<div class="actions">
+<select id="period" onchange="updatePeriod()">
+<option value="month">This Month</option>
+<option value="quarter">This Quarter</option>
+<option value="year">This Year</option>
+</select>
+<button class="primary" onclick="downloadReport()">Export CSV</button>
+</div>
+</div>
+
+<section class="grid">
+<div class="card">
+<div class="metric-icon">👥</div>
+<div class="metric" id="candidates">248</div>
+<div class="metric-label">Total Candidates</div>
+<div class="change">Illustrative demo data</div>
+</div>
+<div class="card">
+<div class="metric-icon">💼</div>
+<div class="metric" id="jobs">18</div>
+<div class="metric-label">Open Positions</div>
+<div class="change">Illustrative demo data</div>
+</div>
+<div class="card">
+<div class="metric-icon">📅</div>
+<div class="metric" id="interviews">42</div>
+<div class="metric-label">Interviews</div>
+<div class="change">Illustrative demo data</div>
+</div>
+<div class="card">
+<div class="metric-icon">✅</div>
+<div class="metric" id="hires">12</div>
+<div class="metric-label">Successful Hires</div>
+<div class="change">Illustrative demo data</div>
+</div>
+</section>
+
+<section class="panels">
+<div class="card">
+<h2>Monthly Hiring Activity</h2>
+<p class="muted">Sample hires across the selected period</p>
+<div class="chart" id="chart"></div>
+</div>
+
+<div class="card">
+<h2>Recruitment Pipeline</h2>
+<p class="muted">Sample candidate distribution</p>
+<div class="pipeline" id="pipeline"></div>
+</div>
+
+<div class="card">
+<h2>Candidate Sources</h2>
+<p class="muted">Illustrative application sources</p>
+<div class="source-row">
+<div class="source-dot"></div><span>Company Website</span><strong>40%</strong>
+</div>
+<div class="source-row">
+<div class="source-dot" style="background:#73a9ff"></div><span>Job Portals</span><strong>30%</strong>
+</div>
+<div class="source-row">
+<div class="source-dot" style="background:#a8c7ff"></div><span>Referrals</span><strong>20%</strong>
+</div>
+<div class="source-row">
+<div class="source-dot" style="background:#d2e1ff"></div><span>Other</span><strong>10%</strong>
+</div>
+</div>
+
+<div class="card">
+<h2>Recruitment Insights</h2>
+<p class="muted">Based on sample dashboard figures</p>
+<h3>Hiring Overview</h3>
+<p class="muted">12 sample hires are shown in the current dataset.</p>
+<h3>Active Recruitment</h3>
+<p class="muted">18 sample job openings are currently represented.</p>
+<h3>Interview Activity</h3>
+<p class="muted">42 sample interviews are represented.</p>
+</div>
+</section>
+
+<div class="card" style="margin-top:17px">
+<h2>Recent Recruitment Activity</h2>
+<p class="muted">Example activity records</p>
+<div class="table-wrap">
+<table>
+<thead>
+<tr><th>POSITION</th><th>DEPARTMENT</th><th>STATUS</th><th>APPLICATIONS</th></tr>
+</thead>
+<tbody>
+<tr><td>Software Engineer</td><td>Technology</td><td><span class="status">Open</span></td><td>56</td></tr>
+<tr><td>UI/UX Designer</td><td>Design</td><td><span class="status">Open</span></td><td>34</td></tr>
+<tr><td>HR Manager</td><td>Human Resources</td><td><span class="status pending">Review</span></td><td>21</td></tr>
+<tr><td>Data Analyst</td><td>Analytics</td><td><span class="status">Open</span></td><td>48</td></tr>
+</tbody>
+</table>
+</div>
+<p class="note">All displayed statistics and recruitment records are illustrative demo data. This static dashboard is not connected to a company database. Connect an authenticated backend before using real employee or candidate information.</p>
+</div>
+
+</main>
+
+<footer>© 2026 HIREMIND AI. Smarter recruitment tools.</footer>
+
+<script>
+const data={
+month:{
+candidates:248,jobs:18,interviews:42,hires:12,
+labels:['Jan','Feb','Mar','Apr','May','Jun'],
+values:[5,8,6,11,9,12],
+pipeline:[248,120,72,42,12]
+},
+quarter:{
+candidates:680,jobs:24,interviews:116,hires:35,
+labels:['Q1','Q2','Q3','Q4'],
+values:[18,24,29,35],
+pipeline:[680,310,180,116,35]
+},
+year:{
+candidates:2450,jobs:42,interviews:430,hires:126,
+labels:['Jan','Mar','May','Jul','Sep','Nov'],
+values:[12,18,23,26,31,35],
+pipeline:[2450,1200,760,430,126]
+}
+};
+
+function renderChart(d){
+const chart=document.getElementById('chart');
+chart.replaceChildren();
+const max=Math.max(...d.values,1);
+d.values.forEach((v,i)=>{
+const group=document.createElement('div');
+group.className='bar-group';
+const value=document.createElement('div');
+value.className='bar-value';
+value.textContent=v;
+const bar=document.createElement('div');
+bar.className='bar';
+bar.style.height=(v/max*145)+'px';
+const label=document.createElement('div');
+label.className='bar-label';
+label.textContent=d.labels[i];
+group.append(value,bar,label);
+chart.appendChild(group);
+});
+}
+
+function renderPipeline(d){
+const names=['Applied','Screening','Shortlisted','Interview','Hired'];
+const box=document.getElementById('pipeline');
+box.replaceChildren();
+const max=d.pipeline[0]||1;
+d.pipeline.forEach((v,i)=>{
+const row=document.createElement('div');
+row.className='pipe-row';
+const name=document.createElement('span');
+name.textContent=names[i];
+const track=document.createElement('div');
+track.className='track';
+const fill=document.createElement('div');
+fill.className='fill';
+fill.style.width=(v/max*100)+'%';
+const count=document.createElement('strong');
+count.textContent=v;
+track.appendChild(fill);
+row.append(name,track,count);
+box.appendChild(row);
+});
+}
+
+function updatePeriod(){
+const d=data[document.getElementById('period').value];
+document.getElementById('candidates').textContent=d.candidates.toLocaleString();
+document.getElementById('jobs').textContent=d.jobs;
+document.getElementById('interviews').textContent=d.interviews;
+document.getElementById('hires').textContent=d.hires;
+renderChart(d);
+renderPipeline(d);
+}
+
+function downloadReport(){
+const d=data[document.getElementById('period').value];
+const rows=[
+['HIREMIND AI - DEMO HR ANALYTICS'],
+['Metric','Sample Value'],
+['Total Candidates',d.candidates],
+['Open Positions',d.jobs],
+['Interviews',d.interviews],
+['Successful Hires',d.hires],
+[],
+['Period','Sample Hires'],
+...d.labels.map((label,i)=>[label,d.values[i]]),
+[],
+['Notice','Illustrative demo data only; not live company data.']
+];
+const csv=rows.map(row=>row.map(value=>
+'"'+String(value??'').replace(/"/g,'""')+'"'
+).join(',')).join('\n');
+const blob=new Blob([csv],{type:'text/csv;charset=utf-8'});
+const url=URL.createObjectURL(blob);
+const link=document.createElement('a');
+link.href=url;
+link.download='hiremind-hr-analytics-demo.csv';
+link.click();
+URL.revokeObjectURL(url);
+}
+
+updatePeriod();
+</script>
+</body>
+  </html>
+  
