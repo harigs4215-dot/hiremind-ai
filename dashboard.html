@@ -171,15 +171,38 @@ if(!t||!s){alert('Enter job title and required skills');return}
 let result=`JOB TITLE: ${t}\n\nEXPERIENCE: ${e}\n\nJOB SUMMARY:\nWe are seeking a ${t} to join our team.\n\nKEY RESPONSIBILITIES:\n• Develop and maintain solutions.\n• Collaborate with team members.\n• Solve technical and business problems.\n\nREQUIRED SKILLS:\n${s}\n\nNote: This is a starter template. Review and customize before publishing.`;
 display('jobResult',result);
 }
-function analyzeResume(){
-let r=document.getElementById('resumeText').value.toLowerCase();
-let s=document.getElementById('resumeSkills').value.toLowerCase().split(',').map(x=>x.trim()).filter(Boolean);
-if(!r.trim()||!s.length){alert('Enter resume text and required skills');return}
-let found=s.filter(x=>r.includes(x));
-let missing=s.filter(x=>!r.includes(x));
-let score=Math.round(found.length/s.length*100);
-display('resumeResult',`KEYWORD COVERAGE: ${score}%\n\nMatched skills: ${found.join(', ')||'None'}\nMissing keywords: ${missing.join(', ')||'None'}\n\nThis is a simple keyword check, not an AI hiring decision. A human reviewer should assess candidates fairly using job-related criteria.`);
+
+function analyzeResume() {
+  const resume = document.getElementById("resumeText").value;
+  const skills = document.getElementById("resumeSkills").value;
+
+  if (!window.HIREMIND_AI) {
+    alert("AI Engine not loaded. Please refresh.");
+    return;
+  }
+
+  const result = window.HIREMIND_AI.analyzeResume(
+    resume,
+    skills
+  );
+
+  if (result.error) {
+    alert(result.error);
+    return;
+  }
+
+  const output =
+    "HIREMIND AI RESUME REPORT\n\n" +
+    "Skill Coverage: " + result.coverage + "\n\n" +
+    "Matched Skills: " +
+    (result.matchedSkills.join(", ") || "None") +
+    "\n\nMissing Skills: " +
+    (result.missingSkills.join(", ") || "None") +
+    "\n\nRecommendation:\n" + result.recommendation;
+
+  display("resumeResult", output);
 }
+
 function matchCandidate(){
 let c=document.getElementById('candidateSkills').value.toLowerCase().split(',').map(x=>x.trim()).filter(Boolean);
 let r=document.getElementById('requiredSkills').value.toLowerCase().split(',').map(x=>x.trim()).filter(Boolean);
