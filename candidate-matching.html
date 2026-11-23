@@ -1,0 +1,267 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>HIREMIND AI | Candidate Matching</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#f4f6fb;color:#172033;font-family:Arial,sans-serif}
+header{background:#101a35;color:white;padding:20px 7%;display:flex;justify-content:space-between;align-items:center}
+.logo{font-size:23px;font-weight:800}
+.logo span{color:#63a5ff}
+header a{color:white;text-decoration:none;font-size:14px}
+main{max-width:1000px;margin:35px auto;padding:18px}
+h1{font-size:32px;margin-bottom:8px}
+.sub{color:#69758a;margin-bottom:25px}
+.card{background:white;border:1px solid #e3e8f1;border-radius:15px;padding:23px;margin-bottom:22px;box-shadow:0 8px 25px #17203308}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+label{display:block;font-size:14px;font-weight:700;margin:16px 0 8px}
+input,textarea{width:100%;padding:13px;border:1px solid #d8dfeb;border-radius:9px;font-size:14px;font-family:Arial}
+textarea{min-height:105px;resize:vertical}
+button{border:0;border-radius:9px;padding:14px 19px;font-weight:700;cursor:pointer}
+.primary{background:#2869e8;color:white;width:100%;margin-top:22px}
+.secondary{background:#eaf1ff;color:#2059bd}
+button:hover{opacity:.88}
+.hidden{display:none}
+.stats{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:18px}
+.stat{background:#f1f5fc;padding:17px;border-radius:11px}
+.stat strong{display:block;font-size:25px;color:#2869e8;margin-bottom:5px}
+.stat span{font-size:13px;color:#68758b}
+.bar{height:9px;background:#e7ecf4;border-radius:10px;overflow:hidden;margin:12px 0}
+.fill{height:100%;background:#3274e8;border-radius:10px}
+.tag{display:inline-block;background:#e8f5ed;color:#187342;padding:6px 10px;border-radius:20px;font-size:12px;margin:4px}
+.missing{background:#fff0e9;color:#a44b20}
+.note{font-size:12px;color:#778399;line-height:1.6}
+footer{text-align:center;padding:25px;color:#778399}
+@media(max-width:650px){.grid{grid-template-columns:1fr}main{padding:13px}.stats{gap:8px}}
+</style>
+</head>
+<body>
+
+<header>
+<div class="logo">HIREMIND<span> AI.</span></div>
+<a href="index.html">← Back to Home</a>
+</header>
+
+<main>
+<h1>Smart Candidate Matching</h1>
+<p class="sub">Compare candidate profiles against your job requirements.</p>
+
+<div class="card">
+<h2>Job Requirements</h2>
+
+<label for="job">Job Title</label>
+<input id="job" placeholder="e.g. Software Engineer">
+
+<label for="required">Required Skills</label>
+<textarea id="required" placeholder="Python, JavaScript, SQL, React"></textarea>
+
+<label for="minimum">Minimum Experience (Years)</label>
+<input id="minimum" type="number" min="0" max="60" value="2">
+</div>
+
+<div class="grid">
+<div class="card">
+<h2>Candidate 1</h2>
+<label for="name1">Candidate Name</label>
+<input id="name1" placeholder="Alex Johnson">
+
+<label for="exp1">Experience (Years)</label>
+<input id="exp1" type="number" min="0" max="60" placeholder="3">
+
+<label for="skills1">Candidate Skills</label>
+<textarea id="skills1" placeholder="Python, JavaScript, SQL, React"></textarea>
+</div>
+
+<div class="card">
+<h2>Candidate 2</h2>
+<label for="name2">Candidate Name</label>
+<input id="name2" placeholder="Jordan Smith">
+
+<label for="exp2">Experience (Years)</label>
+<input id="exp2" type="number" min="0" max="60" placeholder="2">
+
+<label for="skills2">Candidate Skills</label>
+<textarea id="skills2" placeholder="Python, Java, HTML, CSS"></textarea>
+</div>
+</div>
+
+<div class="card">
+<button class="primary" onclick="compare()">Compare Candidates</button>
+</div>
+
+<div class="card hidden" id="results">
+<h2>Candidate Comparison Report</h2>
+<p id="jobTitle"></p>
+
+<div class="grid">
+<div>
+<h3 id="resultName1">Candidate 1</h3>
+<div class="stats">
+<div class="stat"><strong id="score1">0%</strong><span>Skill coverage</span></div>
+<div class="stat"><strong id="experience1">0</strong><span>Experience years</span></div>
+</div>
+<div class="bar"><div class="fill" id="bar1"></div></div>
+<h4>Matching Skills</h4>
+<div id="match1"></div>
+<h4>Skills Not Found</h4>
+<div id="missing1"></div>
+</div>
+
+<div>
+<h3 id="resultName2">Candidate 2</h3>
+<div class="stats">
+<div class="stat"><strong id="score2">0%</strong><span>Skill coverage</span></div>
+<div class="stat"><strong id="experience2">0</strong><span>Experience years</span></div>
+</div>
+<div class="bar"><div class="fill" id="bar2"></div></div>
+<h4>Matching Skills</h4>
+<div id="match2"></div>
+<h4>Skills Not Found</h4>
+<div id="missing2"></div>
+</div>
+</div>
+
+<h3>Comparison Summary</h3>
+<p id="summary"></p>
+
+<p class="note">
+This report compares entered skills and experience only.
+Skill coverage is not an AI score or a measure of candidate quality.
+Missing keywords do not prove a candidate lacks a skill.
+Review original resumes, verify qualifications and conduct fair interviews.
+Do not make hiring decisions based solely on this report.
+</p>
+
+<button class="secondary" onclick="copyReport()">Copy Report</button>
+</div>
+</main>
+
+<footer>© 2026 HIREMIND AI. Smarter recruitment tools.</footer>
+
+<script>
+let reportText='';
+
+function getSkills(id){
+return [...new Set(
+document.getElementById(id).value
+.split(/[,;\n]+/)
+.map(s=>s.trim())
+.filter(Boolean)
+)];
+}
+
+function safeTag(value,missing=false){
+const span=document.createElement('span');
+span.className=missing?'tag missing':'tag';
+span.textContent=value;
+return span;
+}
+
+function displaySkills(id,skills,missing=false){
+const box=document.getElementById(id);
+box.replaceChildren();
+if(!skills.length){
+box.textContent=missing?'No missing keywords found.':'No matching keywords found.';
+return;
+}
+skills.forEach(skill=>box.appendChild(safeTag(skill,missing)));
+}
+
+function compare(){
+const job=document.getElementById('job').value.trim();
+const required=getSkills('required');
+const minimum=Number(document.getElementById('minimum').value);
+
+if(!job||!required.length){
+alert('Enter a job title and required skills.');
+return;
+}
+
+if(!Number.isFinite(minimum)||minimum<0||minimum>60){
+alert('Enter valid minimum experience.');
+return;
+}
+
+const candidates=[];
+
+for(let i=1;i<=2;i++){
+const name=document.getElementById('name'+i).value.trim();
+const expText=document.getElementById('exp'+i).value;
+const exp=Number(expText);
+const skills=getSkills('skills'+i);
+
+if(!name||expText===''||!Number.isFinite(exp)||exp<0||exp>60||!skills.length){
+alert('Complete both candidate profiles with valid experience and skills.');
+return;
+}
+
+const normalized=skills.map(s=>s.toLowerCase());
+const matched=required.filter(s=>normalized.includes(s.toLowerCase()));
+const missing=required.filter(s=>!normalized.includes(s.toLowerCase()));
+const score=Math.round(matched.length/required.length*100);
+
+candidates.push({name,exp,matched,missing,score});
+}
+
+candidates.forEach((c,i)=>{
+const n=i+1;
+document.getElementById('resultName'+n).textContent=c.name;
+document.getElementById('score'+n).textContent=c.score+'%';
+document.getElementById('experience'+n).textContent=c.exp;
+document.getElementById('bar'+n).style.width=c.score+'%';
+displaySkills('match'+n,c.matched);
+displaySkills('missing'+n,c.missing,true);
+});
+
+document.getElementById('jobTitle').textContent='Position: '+job;
+
+let summary='';
+if(candidates[0].score>candidates[1].score){
+summary=candidates[0].name+' has more matching entered skill keywords.';
+}else if(candidates[1].score>candidates[0].score){
+summary=candidates[1].name+' has more matching entered skill keywords.';
+}else{
+summary='Both candidates have equal skill keyword coverage.';
+}
+
+summary+=' Minimum experience requirement: '+minimum+' years. ';
+summary+=candidates.map(c=>
+c.name+': '+(c.exp>=minimum?'Meets':'Below')+
+' the stated experience requirement.'
+).join(' ');
+
+document.getElementById('summary').textContent=summary;
+
+reportText=
+'HIREMIND AI - CANDIDATE COMPARISON\n'+
+'Position: '+job+'\n\n'+
+candidates.map(c=>
+c.name+'\n'+
+'Skill coverage: '+c.score+'%\n'+
+'Experience: '+c.exp+' years\n'+
+'Matching skills: '+c.matched.join(', ')+'\n'+
+'Not found: '+c.missing.join(', ')+'\n'+
+'Experience requirement: '+(c.exp>=minimum?'Meets':'Below')+'\n'
+).join('\n')+
+'\n'+summary+
+'\n\nThis is a basic comparison, not a hiring recommendation.';
+
+document.getElementById('results').classList.remove('hidden');
+document.getElementById('results').scrollIntoView({behavior:'smooth'});
+}
+
+async function copyReport(){
+try{
+await navigator.clipboard.writeText(reportText);
+alert('Comparison report copied!');
+}catch(e){
+alert('Copy unavailable. Please try again.');
+}
+}
+</script>
+</body>
+  </html>
+  
