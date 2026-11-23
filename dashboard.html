@@ -5,230 +5,359 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>HIREMIND AI | HR Dashboard</title>
+
 <style>
-*{box-sizing:border-box;margin:0;padding:0}
-body{font-family:Arial,sans-serif;background:#f5f7fb;color:#182235}
-.layout{display:flex;min-height:100vh}
-.sidebar{width:245px;background:#111c32;color:white;padding:25px 18px}
-.logo{font-size:23px;font-weight:800;margin-bottom:35px}
-.logo span{color:#62a6ff}
-.menu-title{font-size:11px;color:#91a0b8;margin:25px 10px 12px}
-.nav{display:block;width:100%;padding:13px 12px;color:#cbd5e1;text-decoration:none;border-radius:9px;margin:5px 0;font-size:14px}
-.nav:hover,.nav.active{background:#263c60;color:white}
-.main{flex:1;padding:28px;min-width:0}
-.top{display:flex;justify-content:space-between;align-items:center;gap:15px;margin-bottom:30px}
-.top h1{font-size:25px}
-.profile{background:white;padding:11px 16px;border-radius:10px;font-size:13px}
-.welcome{background:linear-gradient(110deg,#174a91,#327ce1);padding:28px;border-radius:16px;color:white;margin-bottom:25px}
-.welcome h2{font-size:23px;margin-bottom:9px}
-.welcome p{color:#e1edff;font-size:14px}
-.cards{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:25px}
-.card{background:white;padding:22px;border-radius:13px;border:1px solid #e8edf4}
-.card p{font-size:13px;color:#758197}
-.card h2{font-size:27px;margin-top:13px}
-.section{background:white;padding:22px;border-radius:13px;margin-bottom:22px;border:1px solid #e8edf4}
-.section h3{margin-bottom:17px}
-.tools{display:grid;grid-template-columns:repeat(3,1fr);gap:15px}
-.tool{padding:20px;border:1px solid #e8edf4;border-radius:12px}
-.tool h4{margin-bottom:9px}
-.tool p{font-size:13px;color:#758197;line-height:1.5;margin-bottom:15px}
-button{border:0;background:#2468c9;color:white;padding:10px 15px;border-radius:8px;cursor:pointer}
-button:hover{background:#174a91}
-input,textarea,select{width:100%;padding:12px;border:1px solid #dce3ed;border-radius:8px;margin:10px 0;font:inherit}
-textarea{min-height:100px;resize:vertical}
-.result{background:#f1f5fb;padding:14px;border-radius:8px;margin-top:12px;white-space:pre-wrap;font-size:13px}
-.hidden{display:none}
-table{width:100%;border-collapse:collapse}
-td,th{text-align:left;padding:13px;border-bottom:1px solid #edf0f5;font-size:13px}
-th{color:#718096}
-@media(max-width:900px){.cards{grid-template-columns:repeat(2,1fr)}.tools{grid-template-columns:repeat(2,1fr)}}
-@media(max-width:600px){.layout{display:block}.sidebar{width:100%;padding:16px}.logo{margin-bottom:15px}.sidebar nav{display:flex;overflow-x:auto;gap:5px}.nav{white-space:nowrap;width:auto}.menu-title{display:none}.main{padding:17px}.cards{grid-template-columns:repeat(2,1fr)}.tools{grid-template-columns:1fr}.top h1{font-size:20px}}
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+}
+
+body {
+  background: #f5f7fb;
+  color: #172033;
+}
+
+.layout {
+  display: flex;
+  min-height: 100vh;
+}
+
+.sidebar {
+  width: 245px;
+  background: #111827;
+  color: white;
+  padding: 28px 18px;
+}
+
+.logo {
+  font-size: 22px;
+  font-weight: bold;
+  margin-bottom: 38px;
+}
+
+.logo span {
+  color: #60a5fa;
+}
+
+.nav-title {
+  color: #94a3b8;
+  font-size: 11px;
+  margin: 25px 10px 12px;
+}
+
+.nav button {
+  width: 100%;
+  background: transparent;
+  border: none;
+  color: #cbd5e1;
+  padding: 14px 12px;
+  text-align: left;
+  border-radius: 9px;
+  margin-bottom: 6px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.nav button:hover,
+.nav button.active {
+  background: #263449;
+  color: white;
+}
+
+.main {
+  flex: 1;
+  padding: 30px;
+  min-width: 0;
+}
+
+.topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 35px;
+}
+
+.topbar p {
+  color: #64748b;
+  margin-top: 7px;
+  font-size: 14px;
+}
+
+.profile {
+  background: white;
+  padding: 12px 17px;
+  border-radius: 10px;
+  font-size: 13px;
+}
+
+.welcome {
+  margin-bottom: 25px;
+}
+
+.welcome p {
+  color: #64748b;
+  margin-top: 8px;
+}
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 18px;
+  margin-bottom: 25px;
+}
+
+.card {
+  background: white;
+  padding: 23px;
+  border-radius: 14px;
+  border: 1px solid #e8edf5;
+}
+
+.card p {
+  color: #64748b;
+  font-size: 13px;
+}
+
+.number {
+  font-size: 30px;
+  font-weight: bold;
+  margin-top: 15px;
+}
+
+.section {
+  background: white;
+  border: 1px solid #e8edf5;
+  padding: 25px;
+  border-radius: 14px;
+  margin-bottom: 20px;
+}
+
+.section h3 {
+  margin-bottom: 18px;
+}
+
+.actions {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 14px;
+}
+
+.action {
+  border: 1px solid #e2e8f0;
+  background: #f8fafc;
+  padding: 20px;
+  border-radius: 10px;
+}
+
+.action h4 {
+  margin-bottom: 9px;
+}
+
+.action p {
+  color: #64748b;
+  font-size: 13px;
+  margin-bottom: 15px;
+}
+
+.action button {
+  background: #2563eb;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 7px;
+  cursor: pointer;
+}
+
+.activity {
+  color: #64748b;
+  font-size: 14px;
+  line-height: 2;
+}
+
+#message {
+  margin-top: 15px;
+  color: #2563eb;
+  font-size: 14px;
+}
+
+@media(max-width: 900px) {
+  .stats {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media(max-width: 600px) {
+  .sidebar {
+    width: 75px;
+    padding: 20px 8px;
+  }
+
+  .logo {
+    font-size: 11px;
+    overflow-wrap: anywhere;
+  }
+
+  .nav-title {
+    display: none;
+  }
+
+  .nav button {
+    font-size: 11px;
+    padding: 12px 5px;
+    text-align: center;
+  }
+
+  .main {
+    padding: 17px 12px;
+  }
+
+  .stats {
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+
+  .card {
+    padding: 15px;
+  }
+
+  .number {
+    font-size: 24px;
+  }
+
+  .actions {
+    grid-template-columns: 1fr;
+  }
+
+  .topbar {
+    align-items: flex-start;
+  }
+}
 </style>
 </head>
+
 <body>
+
 <div class="layout">
+
 <aside class="sidebar">
-<div class="logo">HIREMIND<span> AI</span></div>
-<div class="menu-title">WORKSPACE</div>
-<nav>
-<a class="nav active" href="#" onclick="show('overview',this)">▦ Dashboard</a>
-<a class="nav" href="#" onclick="show('jobs',this)">▤ Job Studio</a>
-<a class="nav" href="#" onclick="show('resume',this)">▧ Resume Analyzer</a>
-<a class="nav" href="#" onclick="show('matching',this)">◎ Candidate Matching</a>
-<a class="nav" href="#" onclick="show('interview',this)">✧ Interview Assistant</a>
-<a class="nav" href="#" onclick="show('analytics',this)">▥ Analytics</a>
-</nav>
-<div class="menu-title">ACCOUNT</div>
-<a class="nav" href="#" onclick="alert('Account settings coming soon')">⚙ Settings</a>
+  <div class="logo">HIREMIND <span>AI</span></div>
+
+  <div class="nav">
+    <div class="nav-title">WORKSPACE</div>
+    <button class="active" onclick="showPage('Dashboard')">Dashboard</button>
+    <button onclick="showPage('Job Studio')">Job Studio</button>
+    <button onclick="showPage('Resume Analyzer')">Resume Analyzer</button>
+    <button onclick="showPage('Candidates')">Candidates</button>
+    <button onclick="showPage('Interviews')">Interviews</button>
+
+    <div class="nav-title">MANAGEMENT</div>
+    <button onclick="showPage('Analytics')">Analytics</button>
+    <button onclick="showPage('Settings')">Settings</button>
+  </div>
 </aside>
 
 <main class="main">
-<header class="top">
-<h1 id="pageTitle">Dashboard Overview</h1>
-<div class="profile">HR Administrator</div>
+
+<header class="topbar">
+  <div>
+    <h2 id="pageTitle">Dashboard</h2>
+    <p>AI-powered recruitment workspace</p>
+  </div>
+  <div class="profile">HR Administrator</div>
 </header>
 
-<div id="overview" class="page">
 <div class="welcome">
-<h2>Welcome to HIREMIND AI 👋</h2>
-<p>Your intelligent recruitment workspace. Manage your hiring workflow in one place.</p>
-</div>
-<div class="cards">
-<div class="card"><p>Total Jobs</p><h2>0</h2></div>
-<div class="card"><p>Candidates</p><h2>0</h2></div>
-<div class="card"><p>Interviews</p><h2>0</h2></div>
-<div class="card"><p>Hired</p><h2>0</h2></div>
-</div>
-<div class="section">
-<h3>AI Recruitment Tools</h3>
-<div class="tools">
-<div class="tool"><h4>📄 Job Studio</h4><p>Create professional job descriptions.</p><button onclick="showById('jobs')">Open Tool</button></div>
-<div class="tool"><h4>🔍 Resume Analyzer</h4><p>Review resume information and skills.</p><button onclick="showById('resume')">Open Tool</button></div>
-<div class="tool"><h4>🎯 Candidate Matching</h4><p>Compare job requirements with candidate skills.</p><button onclick="showById('matching')">Open Tool</button></div>
-<div class="tool"><h4>🎤 Interview Assistant</h4><p>Generate structured interview questions.</p><button onclick="showById('interview')">Open Tool</button></div>
-<div class="tool"><h4>📊 Analytics</h4><p>View your hiring activity.</p><button onclick="showById('analytics')">Open Tool</button></div>
-</div>
-</div>
+  <h2>Welcome to HIREMIND AI 👋</h2>
+  <p>Manage your recruitment process intelligently.</p>
 </div>
 
-<div id="jobs" class="page hidden">
-<div class="section">
-<h3>Job Description Generator</h3>
-<label>Job Title</label><input id="jobTitle" placeholder="e.g. Software Developer">
-<label>Required Skills</label><input id="jobSkills" placeholder="e.g. Python, JavaScript, SQL">
-<label>Experience</label><select id="jobExp"><option>Entry Level</option><option>1-3 Years</option><option>3-5 Years</option><option>5+ Years</option></select>
-<button onclick="generateJob()">Generate Job Description</button>
-<div id="jobResult" class="result hidden"></div>
-</div>
+<div class="stats">
+
+  <div class="card">
+    <p>Total Jobs</p>
+    <div class="number">0</div>
+  </div>
+
+  <div class="card">
+    <p>Total Candidates</p>
+    <div class="number">0</div>
+  </div>
+
+  <div class="card">
+    <p>Interviews</p>
+    <div class="number">0</div>
+  </div>
+
+  <div class="card">
+    <p>Successful Hires</p>
+    <div class="number">0</div>
+  </div>
+
 </div>
 
-<div id="resume" class="page hidden">
 <div class="section">
-<h3>Resume Analyzer</h3>
-<p style="font-size:13px;color:#718096">Paste resume text for a basic keyword-based review. Do not enter sensitive personal information.</p>
-<textarea id="resumeText" placeholder="Paste resume text here..."></textarea>
-<input id="resumeSkills" placeholder="Required job skills (comma separated)">
-<button onclick="analyzeResume()">Analyze Resume</button>
-<div id="resumeResult" class="result hidden"></div>
-</div>
+  <h3>AI Recruitment Tools</h3>
+
+  <div class="actions">
+
+    <div class="action">
+      <h4>Job Description Generator</h4>
+      <p>Create professional job descriptions using AI.</p>
+      <button onclick="showPage('Job Studio')">Open Tool</button>
+    </div>
+
+    <div class="action">
+      <h4>Resume Analyzer</h4>
+      <p>Analyze resume skills and qualifications.</p>
+      <button onclick="showPage('Resume Analyzer')">Analyze Resume</button>
+    </div>
+
+    <div class="action">
+      <h4>Candidate Matching</h4>
+      <p>Find suitable candidates for job roles.</p>
+      <button onclick="showPage('Candidates')">Find Candidates</button>
+    </div>
+
+    <div class="action">
+      <h4>Interview Assistant</h4>
+      <p>Prepare interview questions for recruitment.</p>
+      <button onclick="showPage('Interviews')">Open Assistant</button>
+    </div>
+
+  </div>
+  <div id="message"></div>
 </div>
 
-<div id="matching" class="page hidden">
 <div class="section">
-<h3>Candidate Skill Matching</h3>
-<input id="candidateSkills" placeholder="Candidate skills: Python, SQL, HTML">
-<input id="requiredSkills" placeholder="Required skills: Python, SQL, JavaScript">
-<button onclick="matchCandidate()">Calculate Skill Match</button>
-<div id="matchResult" class="result hidden"></div>
-</div>
-</div>
-
-<div id="interview" class="page hidden">
-<div class="section">
-<h3>Interview Assistant</h3>
-<input id="interviewRole" placeholder="Enter job role">
-<select id="interviewLevel"><option>Entry Level</option><option>Mid Level</option><option>Senior Level</option></select>
-<button onclick="generateInterview()">Generate Questions</button>
-<div id="interviewResult" class="result hidden"></div>
-</div>
-</div>
-
-<div id="analytics" class="page hidden">
-<div class="section">
-<h3>Hiring Analytics</h3>
-<p style="color:#718096;font-size:13px">Demo dashboard. Live recruitment data is not connected yet.</p>
-<table>
-<tr><th>Metric</th><th>Current Value</th></tr>
-<tr><td>Total Jobs</td><td>0</td></tr>
-<tr><td>Total Candidates</td><td>0</td></tr>
-<tr><td>Interviews</td><td>0</td></tr>
-<tr><td>Successful Hires</td><td>0</td></tr>
-</table>
-</div>
+  <h3>Recent Activity</h3>
+  <div class="activity">
+    No recruitment activity yet.<br>
+    Your recruitment activities will appear here.
+  </div>
 </div>
 
 </main>
 </div>
 
 <script>
-function show(id,el){
-document.querySelectorAll('.page').forEach(p=>p.classList.add('hidden'));
-document.getElementById(id).classList.remove('hidden');
-document.querySelectorAll('.nav').forEach(n=>n.classList.remove('active'));
-if(el)el.classList.add('active');
-const titles={overview:'Dashboard Overview',jobs:'Job Studio',resume:'Resume Analyzer',matching:'Candidate Matching',interview:'Interview Assistant',analytics:'Hiring Analytics'};
-document.getElementById('pageTitle').textContent=titles[id]||'Dashboard';
-}
-function showById(id){
-const link=[...document.querySelectorAll('.nav')].find(a=>a.getAttribute('onclick')?.includes("'"+id+"'"));
-show(id,link);
-}
-function generateJob(){
-let t=document.getElementById('jobTitle').value.trim();
-let s=document.getElementById('jobSkills').value.trim();
-let e=document.getElementById('jobExp').value;
-if(!t||!s){alert('Enter job title and required skills');return}
-let result=`JOB TITLE: ${t}\n\nEXPERIENCE: ${e}\n\nJOB SUMMARY:\nWe are seeking a ${t} to join our team.\n\nKEY RESPONSIBILITIES:\n• Develop and maintain solutions.\n• Collaborate with team members.\n• Solve technical and business problems.\n\nREQUIRED SKILLS:\n${s}\n\nNote: This is a starter template. Review and customize before publishing.`;
-display('jobResult',result);
-}
-
-function analyzeResume() {
-  const resume = document.getElementById("resumeText").value;
-  const skills = document.getElementById("resumeSkills").value;
-
-  if (!window.HireMindAI) {
-    alert("HireMind AI engine not loaded.");
-    return;
-  }
-
-  const result = window.HireMindAI.analyzeResume(
-    resume,
-    skills
-  );
-
-  if (!result.success) {
-    alert(result.message);
-    return;
-  }
-
-  const output =
-    "HIREMIND AI RESUME REPORT\n\n" +
-    "Skill Coverage: " + result.coverage + "%\n\n" +
-    "Matched Skills: " + (result.matched.join(", ") || "None") +
-    "\n\nMissing Skills: " + (result.missing.join(", ") || "None") +
-    "\n\n" + result.note;
-
-  display("resumeResult", output);
-}
-function matchCandidate(){
-let c=document.getElementById('candidateSkills').value.toLowerCase().split(',').map(x=>x.trim()).filter(Boolean);
-let r=document.getElementById('requiredSkills').value.toLowerCase().split(',').map(x=>x.trim()).filter(Boolean);
-if(!c.length||!r.length){alert('Enter both skill lists');return}
-let found=r.filter(x=>c.includes(x));
-display('matchResult',`Skill overlap: ${Math.round(found.length/r.length*100)}%\nMatched: ${found.join(', ')||'None'}\nNot listed: ${r.filter(x=>!c.includes(x)).join(', ')||'None'}\n\nThis is a basic skill comparison, not a suitability verdict.`);
-}
-function generateInterview(){
-let role=document.getElementById('interviewRole').value.trim();
-let level=document.getElementById('interviewLevel').value;
-if(!role){alert('Enter a job role');return}
-let qs=[
-`What interests you about working as a ${role}?`,
-`Describe a project relevant to this role.`,
-`How do you approach solving an unfamiliar problem?`,
-`Tell us about a time you worked with a team.`,
-`What skills would you like to develop further?`,
-`How do you prioritize tasks under deadlines?`,
-`Describe a challenge you overcame.`,
-`What questions do you have about this role?`
-];
-display('interviewResult',`INTERVIEW LEVEL: ${level}\nROLE: ${role}\n\n`+qs.map((q,i)=>(i+1)+'. '+q).join('\n\n'));
-}
-function display(id,text){
-let el=document.getElementById(id);
-el.textContent=text;
-el.classList.remove('hidden');
-}
-<script src="ai-engine.js"></script>
-</body>
-  </html>
+function showPage(page) {
+  document.getElementById("pageTitle").textContent = page;
+  document.getElementById("message").textContent =
+    page === "Dashboard"
+      ? "Dashboard opened successfully."
+      : page + " module selected. Integration is coming next.";
   
+  document.querySelectorAll(".nav button").forEach(btn => {
+    btn.classList.toggle(
+      "active",
+      btn.textContent.trim() === page
+    );
+  });
+}
+</script>
+
+</body>
+</html>
