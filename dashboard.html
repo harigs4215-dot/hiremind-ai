@@ -202,20 +202,40 @@ analytics:"Analytics",settings:"Settings"
 };
 const counts={jobs:0,resumes:0,candidates:0,interviews:0};
 
-function navigate(page){
-document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
-document.querySelectorAll(".nav button").forEach(b=>b.classList.remove("active"));
-const target=document.getElementById(page);
-if(!target)return;
-target.classList.add("active");
-const button=document.querySelector('[data-page="'+page+'"]');
-if(button)button.classList.add("active");
-document.getElementById("pageTitle").textContent=titles[page];
-window.scrollTo({top:0,behavior:"smooth"});
+
+function navigate(page) {
+  const pages = document.querySelectorAll(".page");
+  const buttons = document.querySelectorAll(".nav button");
+
+  pages.forEach(section => {
+    section.classList.toggle("active", section.id === page);
+  });
+
+  buttons.forEach(button => {
+    button.classList.toggle(
+      "active",
+      button.dataset.page === page
+    );
+  });
+
+  const title = titles[page];
+
+  if (!title || !document.getElementById(page)) {
+    console.error("Page not found:", page);
+    return;
+  }
+
+  document.getElementById("pageTitle").textContent = title;
+
+  window.scrollTo({ top: 0, behavior: "smooth" });
 }
-document.querySelectorAll(".nav button").forEach(button=>{
-button.addEventListener("click",()=>navigate(button.dataset.page));
+
+document.querySelectorAll(".nav button").forEach(button => {
+  button.addEventListener("click", function () {
+    navigate(this.dataset.page);
+  });
 });
+
 
 function showResult(id,title,text){
 const box=document.getElementById(id);
