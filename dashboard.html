@@ -444,7 +444,38 @@ function runResumeAnalysis() {
     "Missing Skills: " + result.missingSkills.join(", ") + "\n" +
     "Result: " + result.recommendation;
 }
-</script>
+
+function runJobGenerator() {
+  const role = document.getElementById("jobTitle").value;
+  const skills = document.getElementById("jobSkills").value;
+  const experience = document.getElementById("jobExperience").value;
+  const output = document.getElementById("jobResult");
+
+  if (typeof generateJobDescription !== "function") {
+    output.textContent = "AI Engine not loaded.";
+    return;
+  }
+
+  const result = generateJobDescription(role, skills, experience);
+
+  if (!result.success) {
+    output.textContent = result.message;
+    return;
+  }
+
+  const heading = document.createElement("h3");
+  heading.textContent = "Generated Job Description";
+
+  const content = document.createElement("pre");
+  content.textContent = result.description;
+  content.style.whiteSpace = "pre-wrap";
+  content.style.background = "#f8fafc";
+  content.style.padding = "15px";
+  content.style.borderRadius = "8px";
+
+  output.replaceChildren(heading, content);
+  }
+  </script>
 
 <script src="./ai-engine.js"></script>
 
