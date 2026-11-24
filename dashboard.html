@@ -5,75 +5,326 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>HIREMIND AI | HR Platform</title>
+
 <style>
-*{box-sizing:border-box;margin:0;padding:0;font-family:Arial,sans-serif}
-body{background:#f4f6fb;color:#172033}
-.app{display:flex;min-height:100vh}
-.sidebar{width:245px;background:#111827;color:white;padding:25px 15px;flex-shrink:0}
-.logo{font-size:22px;font-weight:bold;padding:10px;margin-bottom:35px}
-.logo span{color:#60a5fa}
-.nav-label{font-size:11px;color:#94a3b8;margin:22px 10px 10px}
-.nav button{width:100%;border:0;background:transparent;color:#cbd5e1;text-align:left;padding:13px 12px;margin:3px 0;border-radius:8px;cursor:pointer}
-.nav button:hover,.nav button.active{background:#263449;color:white}
-.main{flex:1;min-width:0;padding:28px}
-.top{display:flex;justify-content:space-between;align-items:center;margin-bottom:30px;gap:10px}
-.muted{color:#64748b;font-size:13px;margin-top:7px}
-.profile{background:white;padding:12px;border-radius:9px;font-size:13px}
-.page{display:none}
-.page.active{display:block}
-.welcome{margin-bottom:25px}
-.welcome p{color:#64748b;margin-top:8px}
-.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:15px;margin-bottom:22px}
-.card,.panel{background:white;border:1px solid #e6eaf1;border-radius:13px;padding:22px;margin-bottom:18px}
-.card p{font-size:13px;color:#64748b}
-.number{font-size:29px;font-weight:bold;margin-top:12px}
-.panel h3{margin-bottom:17px}
-.tools{display:grid;grid-template-columns:repeat(2,1fr);gap:13px}
-.tool{padding:18px;background:#f8fafc;border:1px solid #e5eaf1;border-radius:10px}
-.tool p{font-size:13px;color:#64748b;margin:9px 0}
-button.primary{background:#2563eb;color:white;border:0;padding:11px 17px;border-radius:8px;cursor:pointer}
-button.secondary{background:#e8efff;color:#1d4ed8;border:0;padding:10px 14px;border-radius:8px;cursor:pointer}
-input,textarea,select{width:100%;padding:12px;margin:9px 0 17px;border:1px solid #dce2eb;border-radius:8px;background:white;font-size:14px}
-textarea{resize:vertical}
-label{font-size:13px;font-weight:bold}
-.result{background:#f1f5f9;padding:16px;border-radius:9px;margin-top:16px;white-space:pre-wrap;overflow-wrap:anywhere}
-.result h2{margin-bottom:10px}
-.small{font-size:12px;color:#64748b;margin-top:8px}
-@media(max-width:850px){.stats{grid-template-columns:repeat(2,1fr)}}
-@media(max-width:600px){
-.app{display:block}
-.sidebar{width:100%;padding:12px}
-.logo{margin:0 0 10px}
-.nav{display:flex;overflow-x:auto;gap:5px}
-.nav-label{display:none}
-.nav button{min-width:max-content;width:auto;padding:11px}
-.main{padding:16px 12px}
-.stats{gap:8px}
-.card{padding:14px}
-.number{font-size:23px}
-.tools{grid-template-columns:1fr}
-.top{align-items:flex-start}
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+}
+
+body {
+  background: #f4f6fb;
+  color: #172033;
+}
+
+.app {
+  display: flex;
+  min-height: 100vh;
+}
+
+.sidebar {
+  width: 245px;
+  background: #111827;
+  color: white;
+  padding: 25px 15px;
+  flex-shrink: 0;
+}
+
+.logo {
+  font-size: 22px;
+  font-weight: bold;
+  padding: 10px;
+  margin-bottom: 35px;
+}
+
+.logo span {
+  color: #60a5fa;
+}
+
+.nav-label {
+  font-size: 11px;
+  color: #94a3b8;
+  margin: 22px 10px 10px;
+}
+
+.nav button {
+  width: 100%;
+  border: 0;
+  background: transparent;
+  color: #cbd5e1;
+  text-align: left;
+  padding: 13px 12px;
+  margin: 3px 0;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.nav button:hover,
+.nav button.active {
+  background: #263449;
+  color: white;
+}
+
+.main {
+  flex: 1;
+  min-width: 0;
+  padding: 28px;
+}
+
+.top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+  gap: 10px;
+}
+
+.muted {
+  color: #64748b;
+  font-size: 13px;
+  margin-top: 7px;
+}
+
+.profile {
+  background: white;
+  padding: 12px;
+  border-radius: 9px;
+  font-size: 13px;
+}
+
+.page {
+  display: none;
+}
+
+.page.active {
+  display: block;
+}
+
+.welcome {
+  margin-bottom: 25px;
+}
+
+.welcome p {
+  color: #64748b;
+  margin-top: 8px;
+}
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 15px;
+  margin-bottom: 22px;
+}
+
+.card,
+.panel {
+  background: white;
+  border: 1px solid #e6eaf1;
+  border-radius: 13px;
+  padding: 22px;
+  margin-bottom: 18px;
+}
+
+.card p {
+  font-size: 13px;
+  color: #64748b;
+}
+
+.number {
+  font-size: 29px;
+  font-weight: bold;
+  margin-top: 12px;
+}
+
+.panel h3 {
+  margin-bottom: 17px;
+}
+
+.tools {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 13px;
+}
+
+.tool {
+  padding: 18px;
+  background: #f8fafc;
+  border: 1px solid #e5eaf1;
+  border-radius: 10px;
+}
+
+.tool p {
+  font-size: 13px;
+  color: #64748b;
+  margin: 9px 0;
+}
+
+button.primary {
+  background: #2563eb;
+  color: white;
+  border: 0;
+  padding: 11px 17px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+button.secondary {
+  background: #e8efff;
+  color: #1d4ed8;
+  border: 0;
+  padding: 10px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible {
+  outline: 2px solid #2563eb;
+  outline-offset: 2px;
+}
+
+input,
+textarea,
+select {
+  width: 100%;
+  padding: 12px;
+  margin: 9px 0 17px;
+  border: 1px solid #dce2eb;
+  border-radius: 8px;
+  background: white;
+  font-size: 14px;
+}
+
+textarea {
+  resize: vertical;
+}
+
+label {
+  font-size: 13px;
+  font-weight: bold;
+}
+
+.result {
+  background: #f1f5f9;
+  padding: 16px;
+  border-radius: 9px;
+  margin-top: 16px;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.result h2 {
+  margin-bottom: 10px;
+}
+
+.small {
+  font-size: 12px;
+  color: #64748b;
+  margin-top: 8px;
+}
+
+table th,
+table td {
+  padding: 12px 8px;
+  border-bottom: 1px solid #e5eaf1;
+  font-size: 13px;
+}
+
+@media(max-width:850px) {
+  .stats {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media(max-width:600px) {
+  .app {
+    display: block;
+  }
+
+  .sidebar {
+    width: 100%;
+    padding: 12px;
+  }
+
+  .logo {
+    margin: 0 0 10px;
+  }
+
+  .nav {
+    display: flex;
+    overflow-x: auto;
+    gap: 5px;
+  }
+
+  .nav-label {
+    display: none;
+  }
+
+  .nav button {
+    min-width: max-content;
+    width: auto;
+    padding: 11px;
+  }
+
+  .main {
+    padding: 16px 12px;
+  }
+
+  .stats {
+    gap: 8px;
+  }
+
+  .card {
+    padding: 14px;
+  }
+
+  .number {
+    font-size: 23px;
+  }
+
+  .tools {
+    grid-template-columns: 1fr;
+  }
+
+  .top {
+    align-items: flex-start;
+  }
 }
 </style>
 </head>
+
 <body>
+
 <div class="app">
+
 <aside class="sidebar">
+
 <div class="logo">HIREMIND <span>AI</span></div>
+
 <div class="nav">
+
 <div class="nav-label">WORKSPACE</div>
+
 <button class="active" data-page="dashboard">Dashboard</button>
 <button data-page="jobs">Job Studio</button>
 <button data-page="resume">Resume Analyzer</button>
 <button data-page="candidates">Candidates</button>
 <button data-page="interviews">Interviews</button>
+
 <div class="nav-label">MANAGEMENT</div>
+
 <button data-page="analytics">Analytics</button>
 <button data-page="settings">Settings</button>
+
 </div>
 </aside>
 
 <main class="main">
+
 <header class="top">
 <div>
 <h2 id="pageTitle">Dashboard</h2>
@@ -82,36 +333,88 @@ label{font-size:13px;font-weight:bold}
 <div class="profile">HR Administrator</div>
 </header>
 
+<!-- DASHBOARD -->
+
 <section class="page active" id="dashboard">
+
 <div class="welcome">
 <h2>Welcome to HIREMIND AI</h2>
 <p>Manage your recruitment workflow from one workspace.</p>
 </div>
+
 <div class="stats">
-<div class="card"><p>Total Jobs</p><div class="number" id="jobCount">0</div></div>
-<div class="card"><p>Resumes Analyzed</p><div class="number" id="resumeCount">0</div></div>
-<div class="card"><p>Interviews Prepared</p><div class="number" id="interviewCount">0</div></div>
-<div class="card"><p>Candidate Checks</p><div class="number" id="candidateCount">0</div></div>
+
+<div class="card">
+<p>Total Jobs</p>
+<div class="number" id="jobCount">0</div>
 </div>
+
+<div class="card">
+<p>Resumes Analyzed</p>
+<div class="number" id="resumeCount">0</div>
+</div>
+
+<div class="card">
+<p>Interviews Prepared</p>
+<div class="number" id="interviewCount">0</div>
+</div>
+
+<div class="card">
+<p>Candidate Checks</p>
+<div class="number" id="candidateCount">0</div>
+</div>
+
+</div>
+
 <div class="panel">
 <h3>Recruitment Tools</h3>
+
 <div class="tools">
-<div class="tool"><h4>Job Description Generator</h4><p>Create structured job descriptions.</p><button class="primary" onclick="navigate('jobs')">Open Tool</button></div>
-<div class="tool"><h4>Resume Analyzer</h4><p>Compare resume text with role skills.</p><button class="primary" onclick="navigate('resume')">Open Tool</button></div>
-<div class="tool"><h4>Candidate Matching</h4><p>Review skill overlap with a job.</p><button class="primary" onclick="navigate('candidates')">Open Tool</button></div>
-<div class="tool"><h4>Interview Assistant</h4><p>Prepare structured interview questions.</p><button class="primary" onclick="navigate('interviews')">Open Tool</button></div>
+
+<div class="tool">
+<h4>Job Description Generator</h4>
+<p>Create structured job descriptions.</p>
+<button class="primary" onclick="navigate('jobs')">Open Tool</button>
+</div>
+
+<div class="tool">
+<h4>Resume Analyzer</h4>
+<p>Compare resume text with role skills.</p>
+<button class="primary" onclick="navigate('resume')">Open Tool</button>
+</div>
+
+<div class="tool">
+<h4>Candidate Matching</h4>
+<p>Review skill overlap with a job.</p>
+<button class="primary" onclick="navigate('candidates')">Open Tool</button>
+</div>
+
+<div class="tool">
+<h4>Interview Assistant</h4>
+<p>Prepare structured interview questions.</p>
+<button class="primary" onclick="navigate('interviews')">Open Tool</button>
+</div>
+
 </div>
 </div>
 </section>
 
+<!-- JOB STUDIO -->
+
 <section class="page" id="jobs">
+
 <div class="panel">
+
 <h3>AI Job Description Generator</h3>
+
 <label>Job Title</label>
 <input id="jobTitle" placeholder="e.g. Software Developer">
+
 <label>Required Skills</label>
 <input id="jobSkills" placeholder="HTML, CSS, JavaScript, React">
+
 <label>Experience</label>
+
 <select id="jobExperience">
 <option value="">Select experience</option>
 <option>Fresher</option>
@@ -119,23 +422,42 @@ label{font-size:13px;font-weight:bold}
 <option>3-5 Years</option>
 <option>5+ Years</option>
 </select>
-<button class="primary" onclick="runJobGenerator()">Generate Description</button>
+
+<button class="primary" onclick="runJobGenerator()">
+Generate Description
+</button>
+
 <div id="jobResult"></div>
+
 </div>
 </section>
+
+<!-- RESUME ANALYZER -->
 
 <section class="page" id="resume">
+
 <div class="panel">
+
 <h3>Resume Analyzer</h3>
+
 <label>Resume Text</label>
-<textarea id="resumeText" rows="8" placeholder="Paste resume text here"></textarea>
+<textarea id="resumeText" rows="8"
+placeholder="Paste resume text here"></textarea>
+
 <label>Required Skills (comma separated)</label>
-<input id="requiredSkills" placeholder="HTML, CSS, JavaScript, Python">
-<button class="primary" onclick="runResumeAnalysis()">Analyze Resume</button>
+<input id="requiredSkills"
+placeholder="HTML, CSS, JavaScript, Python">
+
+<button class="primary" onclick="runResumeAnalysis()">
+Analyze Resume
+</button>
+
 <div id="resumeResult"></div>
+
 </div>
 </section>
 
+<!-- CANDIDATES -->
 
 <section class="page" id="candidates">
 
@@ -145,37 +467,47 @@ label{font-size:13px;font-weight:bold}
 </div>
 
 <div class="stats">
+
 <div class="card">
 <p>Total Candidates</p>
 <div class="number" id="totalCandidates">0</div>
 </div>
+
 <div class="card">
 <p>Shortlisted</p>
 <div class="number" id="shortlistedCandidates">0</div>
 </div>
+
 <div class="card">
 <p>Interview Stage</p>
 <div class="number" id="interviewCandidates">0</div>
 </div>
+
 <div class="card">
 <p>Selected</p>
 <div class="number" id="selectedCandidates">0</div>
 </div>
+
 </div>
 
 <div class="panel">
+
 <h3>Add New Candidate</h3>
 
 <label>Candidate Name</label>
-<input id="newCandidateName" placeholder="Enter candidate name">
+<input id="newCandidateName"
+placeholder="Enter candidate name">
 
 <label>Applied Position</label>
-<input id="newCandidateRole" placeholder="Software Developer">
+<input id="newCandidateRole"
+placeholder="Software Developer">
 
 <label>Skills</label>
-<input id="newCandidateSkills" placeholder="HTML, CSS, JavaScript">
+<input id="newCandidateSkills"
+placeholder="HTML, CSS, JavaScript">
 
 <label>Application Status</label>
+
 <select id="newCandidateStatus">
 <option>Applied</option>
 <option>Shortlisted</option>
@@ -186,12 +518,17 @@ label{font-size:13px;font-weight:bold}
 <button class="primary" onclick="addCandidate()">
 + Add Candidate
 </button>
+
 </div>
 
 <div class="panel">
+
 <h3>Candidate Database</h3>
+
 <div style="overflow-x:auto">
+
 <table style="width:100%;text-align:left;border-collapse:collapse">
+
 <thead>
 <tr>
 <th>Name</th>
@@ -201,13 +538,17 @@ label{font-size:13px;font-weight:bold}
 <th>Action</th>
 </tr>
 </thead>
+
 <tbody id="candidateTable"></tbody>
+
 </table>
 </div>
 </div>
 
 <div class="panel">
+
 <h3>Candidate Skill Matching</h3>
+
 <label>Candidate Skills</label>
 <textarea id="candidateSkills" rows="5"
 placeholder="Enter candidate skills"></textarea>
@@ -221,16 +562,24 @@ Check Skill Match
 </button>
 
 <div id="candidateResult"></div>
-</div>
 
+</div>
 </section>
 
+<!-- INTERVIEWS -->
+
 <section class="page" id="interviews">
+
 <div class="panel">
+
 <h3>Interview Assistant</h3>
+
 <label>Job Role</label>
-<input id="interviewRole" placeholder="e.g. Frontend Developer">
+<input id="interviewRole"
+placeholder="e.g. Frontend Developer">
+
 <label>Experience Level</label>
+
 <select id="interviewLevel">
 <option value="">Select level</option>
 <option>Fresher</option>
@@ -238,72 +587,197 @@ Check Skill Match
 <option>Mid-level</option>
 <option>Senior</option>
 </select>
-<button class="primary" onclick="runInterviewGenerator()">Generate Questions</button>
+
+<button class="primary" onclick="runInterviewGenerator()">
+Generate Questions
+</button>
+
 <div id="interviewResult"></div>
+
 </div>
 </section>
+
+<!-- ANALYTICS -->
 
 <section class="page" id="analytics">
+
 <div class="panel">
+
 <h3>Recruitment Analytics</h3>
-<p class="muted">Session activity counters for this browser.</p>
+
+<p class="muted">
+Session activity counters for this browser.
+</p>
+
 <div class="stats">
-<div class="card"><p>Jobs generated</p><div class="number" id="aJobs">0</div></div>
-<div class="card"><p>Resumes checked</p><div class="number" id="aResumes">0</div></div>
-<div class="card"><p>Candidate checks</p><div class="number" id="aCandidates">0</div></div>
-<div class="card"><p>Interview sets</p><div class="number" id="aInterviews">0</div></div>
+
+<div class="card">
+<p>Jobs generated</p>
+<div class="number" id="aJobs">0</div>
 </div>
-<p class="small">These are local session counts, not live company-wide analytics.</p>
+
+<div class="card">
+<p>Resumes checked</p>
+<div class="number" id="aResumes">0</div>
+</div>
+
+<div class="card">
+<p>Candidate checks</p>
+<div class="number" id="aCandidates">0</div>
+</div>
+
+<div class="card">
+<p>Interview sets</p>
+<div class="number" id="aInterviews">0</div>
+</div>
+
+</div>
+
+<p class="small">
+These are local session counts, not live company-wide analytics.
+</p>
+
 </div>
 </section>
 
+<!-- SETTINGS -->
+
 <section class="page" id="settings">
+
 <div class="panel">
+
 <h3>Settings</h3>
-<p>HIREMIND AI · Dashboard Version 2.0</p>
+
+<p>HIREMIND AI · Dashboard Version 2.1</p>
+
 <p class="muted">Engine: JavaScript utility functions</p>
-<p class="muted">Storage: Current browser session only</p>
+<p class="muted">Storage: Current browser session for analytics; browser local storage for candidates</p>
 <p class="muted">AI API: Not connected yet</p>
+
 </div>
 </section>
+
 </main>
 </div>
 
-<script src="./ai-engine.js"></script>
-<script>
-const titles={
-dashboard:"Dashboard",jobs:"Job Studio",resume:"Resume Analyzer",
-candidates:"Candidates",interviews:"Interviews",
-analytics:"Analytics",settings:"Settings"
-};
-const counts={jobs:0,resumes:0,candidates:0,interviews:0};
+<!-- AI ENGINE -->
 
+<script src="./ai-engine.js"></script>
+
+<script>
+
+// PAGE NAVIGATION
+
+const titles = {
+  dashboard: "Dashboard",
+  jobs: "Job Studio",
+  resume: "Resume Analyzer",
+  candidates: "Candidates",
+  interviews: "Interviews",
+  analytics: "Analytics",
+  settings: "Settings"
+};
+
+// ACTIVITY COUNTS
+
+const counts = {
+  jobs: 0,
+  resumes: 0,
+  candidates: 0,
+  interviews: 0
+};
+
+// NAVIGATION FUNCTION
+
+function navigate(page) {
+
+  if (!titles[page] || !document.getElementById(page)) {
+    console.error("Page not found:", page);
+    return;
+  }
+
+  document.querySelectorAll(".page").forEach(section => {
+    section.classList.toggle("active", section.id === page);
+  });
+
+  document.querySelectorAll(".nav button").forEach(button => {
+    button.classList.toggle(
+      "active",
+      button.dataset.page === page
+    );
+  });
+
+  document.getElementById("pageTitle").textContent = titles[page];
+
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+// NAVIGATION BUTTON EVENTS
+
+document.querySelectorAll(".nav button").forEach(button => {
+  button.addEventListener("click", function() {
+    navigate(this.dataset.page);
+  });
+});
+
+// CANDIDATE STORAGE
 
 let candidateList = [];
 
 try {
-  candidateList = JSON.parse(
-    localStorage.getItem("hiremind_candidates") || "[]"
-  );
 
-  if (!Array.isArray(candidateList)) {
-    candidateList = [];
+  const storedCandidates = localStorage.getItem("hiremind_candidates");
+
+  if (storedCandidates) {
+    const parsed = JSON.parse(storedCandidates);
+
+    if (Array.isArray(parsed)) {
+      candidateList = parsed.filter(candidate =>
+        candidate &&
+        typeof candidate.name === "string" &&
+        typeof candidate.role === "string" &&
+        typeof candidate.skills === "string" &&
+        typeof candidate.status === "string"
+      );
+    }
   }
+
 } catch (error) {
+  console.error("Candidate storage error:", error);
   candidateList = [];
 }
 
+// SAVE CANDIDATES
+
 function saveCandidates() {
-  localStorage.setItem(
-    "hiremind_candidates",
-    JSON.stringify(candidateList)
-  );
+
+  try {
+
+    localStorage.setItem(
+      "hiremind_candidates",
+      JSON.stringify(candidateList)
+    );
+
+    return true;
+
+  } catch (error) {
+
+    console.error("Could not save candidates:", error);
+    alert("Could not save candidate data in this browser.");
+    return false;
+  }
 }
 
+// ADD CANDIDATE
+
 function addCandidate() {
+
   const name = document.getElementById("newCandidateName").value.trim();
+
   const role = document.getElementById("newCandidateRole").value.trim();
+
   const skills = document.getElementById("newCandidateSkills").value.trim();
+
   const status = document.getElementById("newCandidateStatus").value;
 
   if (!name || !role || !skills) {
@@ -311,47 +785,112 @@ function addCandidate() {
     return;
   }
 
-  candidateList.push({ name, role, skills, status });
+  const candidate = {
+    name: name,
+    role: role,
+    skills: skills,
+    status: status
+  };
 
-  saveCandidates();
+  candidateList.push(candidate);
+
+  if (!saveCandidates()) {
+    candidateList.pop();
+    return;
+  }
+
   renderCandidates();
 
   document.getElementById("newCandidateName").value = "";
   document.getElementById("newCandidateRole").value = "";
   document.getElementById("newCandidateSkills").value = "";
+
+  alert("Candidate added successfully!");
 }
 
+// DELETE CANDIDATE
+
+function deleteCandidate(index) {
+
+  if (!Number.isInteger(index) ||
+      index < 0 ||
+      index >= candidateList.length) {
+    return;
+  }
+
+  if (!confirm("Are you sure you want to delete this candidate?")) {
+    return;
+  }
+
+  const removed = candidateList.splice(index, 1)[0];
+
+  if (!saveCandidates()) {
+    candidateList.splice(index, 0, removed);
+    return;
+  }
+
+  renderCandidates();
+}
+
+// RENDER CANDIDATES
+
 function renderCandidates() {
+
   const table = document.getElementById("candidateTable");
+
   table.replaceChildren();
 
+  if (candidateList.length === 0) {
+
+    const row = document.createElement("tr");
+    const cell = document.createElement("td");
+
+    cell.colSpan = 5;
+    cell.textContent = "No candidates added yet.";
+    cell.style.padding = "18px 8px";
+    cell.style.color = "#64748b";
+
+    row.appendChild(cell);
+    table.appendChild(row);
+  }
+
   candidateList.forEach((candidate, index) => {
+
     const row = document.createElement("tr");
 
-    [candidate.name, candidate.role, candidate.skills, candidate.status]
-      .forEach(value => {
-        const cell = document.createElement("td");
-        cell.textContent = value;
-        cell.style.padding = "12px 8px";
-        row.appendChild(cell);
-      });
+    [
+      candidate.name,
+      candidate.role,
+      candidate.skills,
+      candidate.status
+    ].forEach(value => {
+
+      const cell = document.createElement("td");
+
+      cell.textContent = value;
+      row.appendChild(cell);
+
+    });
 
     const actionCell = document.createElement("td");
+
     const deleteButton = document.createElement("button");
 
     deleteButton.textContent = "Delete";
     deleteButton.className = "secondary";
 
-    deleteButton.onclick = () => {
-      candidateList.splice(index, 1);
-      saveCandidates();
-      renderCandidates();
-    };
+    deleteButton.addEventListener("click", () => {
+      deleteCandidate(index);
+    });
 
     actionCell.appendChild(deleteButton);
     row.appendChild(actionCell);
+
     table.appendChild(row);
+
   });
+
+  // UPDATE CANDIDATE STATISTICS
 
   document.getElementById("totalCandidates").textContent =
     candidateList.length;
@@ -364,157 +903,212 @@ function renderCandidates() {
 
   document.getElementById("selectedCandidates").textContent =
     candidateList.filter(c => c.status === "Selected").length;
+
 }
+
+// INITIAL CANDIDATE RENDER
 
 renderCandidates();
 
-  document.getElementById("newCandidateName").value = "";
-  document.getElementById("newCandidateRole").value = "";
-  document.getElementById("newCandidateSkills").value = "";
+// RESULT DISPLAY
+
+function showResult(id, title, text) {
+
+  const box = document.getElementById(id);
+
+  box.replaceChildren();
+
+  const heading = document.createElement("h3");
+  heading.textContent = title;
+
+  const content = document.createElement("div");
+  content.className = "result";
+  content.textContent = text;
+
+  box.append(heading, content);
 }
 
-function renderCandidates() {
-  const table = document.getElementById("candidateTable");
-  table.replaceChildren();
+// UPDATE DASHBOARD AND ANALYTICS COUNTS
 
-  candidateList.forEach((candidate, index) => {
-    const row = document.createElement("tr");
+function updateCounts() {
 
-    [candidate.name, candidate.role, candidate.skills, candidate.status].forEach(value => {
-      const cell = document.createElement("td");
-      cell.textContent = value;
-      cell.style.padding = "12px 8px";
-      row.appendChild(cell);
-    });
+  document.getElementById("jobCount").textContent = counts.jobs;
 
-    const actionCell = document.createElement("td");
-    const deleteButton = document.createElement("button");
+  document.getElementById("resumeCount").textContent = counts.resumes;
 
-    deleteButton.textContent = "Delete";
-    deleteButton.className = "secondary";
-    deleteButton.onclick = () => {
-      candidateList.splice(index, 1);
-      renderCandidates();
-    };
+  document.getElementById("interviewCount").textContent = counts.interviews;
 
-    actionCell.appendChild(deleteButton);
-    row.appendChild(actionCell);
-    table.appendChild(row);
-  });
+  document.getElementById("candidateCount").textContent = counts.candidates;
 
-  document.getElementById("totalCandidates").textContent = candidateList.length;
-  document.getElementById("shortlistedCandidates").textContent =
-    candidateList.filter(c => c.status === "Shortlisted").length;
-  document.getElementById("interviewCandidates").textContent =
-    candidateList.filter(c => c.status === "Interview").length;
-  document.getElementById("selectedCandidates").textContent =
-    candidateList.filter(c => c.status === "Selected").length;
-      }
-                                       
+  document.getElementById("aJobs").textContent = counts.jobs;
 
-function navigate(page) {
-  const pages = document.querySelectorAll(".page");
-  const buttons = document.querySelectorAll(".nav button");
+  document.getElementById("aResumes").textContent = counts.resumes;
 
-  pages.forEach(section => {
-    section.classList.toggle("active", section.id === page);
-  });
+  document.getElementById("aCandidates").textContent = counts.candidates;
 
-  buttons.forEach(button => {
-    button.classList.toggle(
-      "active",
-      button.dataset.page === page
+  document.getElementById("aInterviews").textContent = counts.interviews;
+
+}
+
+// JOB DESCRIPTION GENERATOR
+
+function runJobGenerator() {
+
+  const role = document.getElementById("jobTitle").value.trim();
+
+  const skills = document.getElementById("jobSkills").value.trim();
+
+  const experience = document.getElementById("jobExperience").value;
+
+  if (!role || !skills || !experience) {
+
+    showResult(
+      "jobResult",
+      "Missing information",
+      "Please enter the job title, required skills and experience."
     );
-  });
 
-  const title = titles[page];
-
-  if (!title || !document.getElementById(page)) {
-    console.error("Page not found:", page);
     return;
   }
 
-  document.getElementById("pageTitle").textContent = title;
+  if (typeof generateJobDescription !== "function") {
 
-  window.scrollTo({ top: 0, behavior: "smooth" });
+    showResult(
+      "jobResult",
+      "Engine unavailable",
+      "Check that ai-engine.js exists and loads successfully."
+    );
+
+    return;
+  }
+
+  try {
+
+    const result = generateJobDescription(role, skills, experience);
+
+    if (!result || !result.success) {
+
+      showResult(
+        "jobResult",
+        "Could not generate",
+        result?.message || "Unexpected engine response."
+      );
+
+      return;
+    }
+
+    counts.jobs++;
+    updateCounts();
+
+    showResult(
+      "jobResult",
+      "Generated Job Description",
+      result.description
+    );
+
+  } catch (error) {
+
+    showResult("jobResult", "Error", error.message);
+
+  }
 }
 
-document.querySelectorAll(".nav button").forEach(button => {
-  button.addEventListener("click", function () {
-    navigate(this.dataset.page);
-  });
-});
+// RESUME ANALYZER
 
+function runResumeAnalysis() {
 
-function showResult(id,title,text){
-const box=document.getElementById(id);
-box.replaceChildren();
-const heading=document.createElement("h3");
-heading.textContent=title;
-const content=document.createElement("div");
-content.className="result";
-content.textContent=text;
-box.append(heading,content);
+  const resume = document.getElementById("resumeText").value.trim();
+
+  const skills = document.getElementById("requiredSkills").value.trim();
+
+  if (!resume || !skills) {
+
+    showResult(
+      "resumeResult",
+      "Missing information",
+      "Enter resume text and required skills."
+    );
+
+    return;
+  }
+
+  if (typeof analyzeResume !== "function") {
+
+    showResult(
+      "resumeResult",
+      "Engine unavailable",
+      "Check that ai-engine.js exists and loads successfully."
+    );
+
+    return;
+  }
+
+  try {
+
+    const result = analyzeResume(resume, skills);
+
+    if (!result || !result.success) {
+
+      showResult(
+        "resumeResult",
+        "Analysis error",
+        result?.message || "Unexpected engine response."
+      );
+
+      return;
+    }
+
+    counts.resumes++;
+    updateCounts();
+
+    showResult(
+      "resumeResult",
+      "Skill Comparison",
+      "Match score: " + result.score + "%" +
+      "\nMatched skills: " + (result.matchedSkills.join(", ") || "None") +
+      "\nMissing skills: " + (result.missingSkills.join(", ") || "None") +
+      "\n\nThis is a basic text-based skill comparison, not an assessment of candidate suitability."
+    );
+
+  } catch (error) {
+
+    showResult("resumeResult", "Error", error.message);
+
+  }
 }
 
-function updateCounts(){
-document.getElementById("jobCount").textContent=counts.jobs;
-document.getElementById("resumeCount").textContent=counts.resumes;
-document.getElementById("interviewCount").textContent=counts.interviews;
-document.getElementById("candidateCount").textContent=counts.candidates;
-document.getElementById("aJobs").textContent=counts.jobs;
-document.getElementById("aResumes").textContent=counts.resumes;
-document.getElementById("aCandidates").textContent=counts.candidates;
-document.getElementById("aInterviews").textContent=counts.interviews;
-}
+// CANDIDATE SKILL MATCHING
 
-function runJobGenerator(){
-const role=document.getElementById("jobTitle").value.trim();
-const skills=document.getElementById("jobSkills").value.trim();
-const experience=document.getElementById("jobExperience").value;
-if(!role||!skills||!experience){showResult("jobResult","Missing information","Please enter the job title, required skills and experience.");return;}
-if(typeof generateJobDescription!=="function"){showResult("jobResult","Engine unavailable","Check that ai-engine.js exists and loads successfully.");return;}
-const result=generateJobDescription(role,skills,experience);
-if(!result.success){showResult("jobResult","Could not generate",result.message);return;}
-counts.jobs++;updateCounts();
-showResult("jobResult","Generated Job Description",result.description);
-}
+function runCandidateMatch() {
 
-function runResumeAnalysis(){
-const resume=document.getElementById("resumeText").value.trim();
-const skills=document.getElementById("requiredSkills").value.trim();
-if(!resume||!skills){showResult("resumeResult","Missing information","Enter resume text and required skills.");return;}
-if(typeof analyzeResume!=="function"){showResult("resumeResult","Engine unavailable","Check that ai-engine.js exists and loads successfully.");return;}
-const result=analyzeResume(resume,skills);
-if(!result.success){showResult("resumeResult","Analysis error",result.message);return;}
-counts.resumes++;updateCounts();
-showResult("resumeResult","Skill Comparison",
-"Match score: "+result.score+"%\nMatched skills: "+(result.matchedSkills.join(", ")||"None")+"\nMissing skills: "+(result.missingSkills.join(", ")||"None")+"\n\nThis is a basic text-based skill comparison, not an assessment of candidate suitability.");
-}
+  const resume = document.getElementById("candidateSkills").value.trim();
 
-function runCandidateMatch(){
-const resume=document.getElementById("candidateSkills").value.trim();
-const skills=document.getElementById("candidateRequired").value.trim();
-if(!resume||!skills){showResult("candidateResult","Missing information","Enter candidate skills and job requirements.");return;}
-if(typeof matchCandidate!=="function"){showResult("candidateResult","Engine unavailable","Check ai-engine.js.");return;}
-const result=matchCandidate(resume,skills);
-if(!result.success){showResult("candidateResult","Matching error",result.message);return;}
-counts.candidates++;updateCounts();
-showResult("candidateResult","Skill Match",
-"Skill overlap: "+result.matchScore+"%\nMatched: "+(result.matchedSkills.join(", ")||"None")+"\nNot found in text: "+(result.missingSkills.join(", ")||"None")+"\n\nUse this only as a review aid. Do not use it as an automated hiring decision.");
-}
+  const skills = document.getElementById("candidateRequired").value.trim();
 
-function runInterviewGenerator(){
-const role=document.getElementById("interviewRole").value.trim();
-const level=document.getElementById("interviewLevel").value;
-if(!role||!level){showResult("interviewResult","Missing information","Enter a job role and experience level.");return;}
-if(typeof generateInterviewQuestions!=="function"){showResult("interviewResult","Engine unavailable","Check ai-engine.js.");return;}
-const result=generateInterviewQuestions(role,level);
-if(!result.success){showResult("interviewResult","Error",result.message);return;}
-counts.interviews++;updateCounts();
-showResult("interviewResult","Interview Questions",result.questions.map((q,i)=>(i+1)+". "+q).join("\n"));
-}
-updateCounts();
-</script>
-</body>
-</html>
+  if (!resume || !skills) {
+
+    showResult(
+      "candidateResult",
+      "Missing information",
+      "Enter candidate skills and job requirements."
+    );
+
+    return;
+  }
+
+  if (typeof matchCandidate !== "function") {
+
+    showResult(
+      "candidateResult",
+      "Engine unavailable",
+      "Check ai-engine.js."
+    );
+
+    return;
+  }
+
+  try {
+
+    const result = matchCandidate(resume, skills);
+
+    if (!result || !result.success) {
